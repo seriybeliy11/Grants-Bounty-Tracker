@@ -53,6 +53,7 @@ dist-ssr/
 
 # Python
 __pycache__/
+venv/
 
 # Compiled Python files
 *.pyc

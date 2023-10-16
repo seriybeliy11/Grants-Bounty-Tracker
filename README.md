@@ -8,7 +8,6 @@ GitHub Analytics Dashboard is a web application and analytical tool designed for
 
 ## Table of Contents
 
-- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -43,7 +42,7 @@ GitHub Analytics Dashboard is a web application and analytical tool designed for
    python Tracking.py
    ```
 
-   This will start the development server, and you can access the dashboard at [http://localhost:3157](http://localhost:3157).
+   This will start the development server, and you can access the dashboard at [http://localhost:5173](http://localhost:5173).
 
 2. Explore the GitHub project metrics with the provided visualizations.
 

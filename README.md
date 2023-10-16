@@ -26,7 +26,7 @@ GitHub Analytics Dashboard is a web application and analytical tool designed for
 2. Navigate to the project directory:
 
    ```bash
-   cd Grants-Bounty-Tracking
+   cd Grants-Bounty-Tracker
    ```
 
 3. Install dependencies:

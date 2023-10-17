@@ -1,3 +1,6 @@
+![image](https://github.com/seriybeliy11/Grants-Bounty-Tracker/assets/129196368/2bf89dd0-acc7-44eb-8164-58755982b55e)
+
+
 # Grants & Bounties Tracker
 
 **GitHub Analytics Dashboard**
@@ -5,6 +8,16 @@
 ## Description
 
 GitHub Analytics Dashboard is a web application and analytical tool designed for tracking various metrics of a GitHub project, particularly those related to crowdsourced development. The metrics include rewards, the number of resolved and closed issues, participant counts, and the quantity of comments on issues.
+
+## Functional
+- the best countertributer 
+- number of tasks recorded
+- number of contributors 
+- status ratio for tasks 
+- task label ratio 
+- financial line chart 
+- number of comments 
+- task duration 
 
 ## Table of Contents
 
@@ -15,6 +28,7 @@ GitHub Analytics Dashboard is a web application and analytical tool designed for
 - [License](#license)
 
 ## Installation
+To get started with the tool, you need to install node.js. Download the installer according to your operating system and install - https://nodejs.org/en
 
 1. Clone the repository:
 

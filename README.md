@@ -7,7 +7,7 @@
 
 ## Description
 
-GitHub Analytics Dashboard is a web application and analytical tool designed for tracking various metrics of a GitHub project, particularly those related to crowdsourced development. The metrics include rewards, the number of resolved and closed issues, participant counts, and the quantity of comments on issues.
+GitHub Analytics Dashboard is a web application and analytical tool designed for tracking various metrics of a TON "Grants & Bounties", particularly those related to crowdsourced development. The metrics include rewards, the number of resolved and closed issues, participant counts, and the quantity of comments on issues.
 
 ## Functional
 - the best countertributer 

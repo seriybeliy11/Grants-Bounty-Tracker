@@ -1,4 +1,5 @@
-![image](https://github.com/seriybeliy11/Grants-Bounty-Tracker/assets/129196368/2bf89dd0-acc7-44eb-8164-58755982b55e)
+![egw](https://github.com/seriybeliy11/Grants-Bounty-Tracker/assets/129196368/90a85183-1f25-4982-8db4-4f99fe9a8aaf)
+
 
 
 # Grants & Bounties Tracker
@@ -10,14 +11,24 @@
 GitHub Analytics Dashboard is a web application and analytical tool designed for tracking various metrics of a TON "Grants & Bounties", particularly those related to crowdsourced development. The metrics include rewards, the number of resolved and closed issues, participant counts, and the quantity of comments on issues.
 
 ## Functional
-- the best countertributer 
-- number of tasks recorded
-- number of contributors 
-- status ratio for tasks 
-- task label ratio 
-- financial line chart 
-- number of comments 
-- task duration 
+Our tool shows many key metrics for an organization, including:
+- 👨‍👨‍👦‍👦Contributor's Value
+- 🔥Best Contributor
+- 📌Issue's Value
+- ⌚Average task completion time
+- 📍Biggest award received
+- 👀Highest number of comments
+
+Graphs visualize the following data:
+- Contributors Data (The graph presents information about the number of actions of the named contributors)
+- Issue's Data (The task duration graph is a visualization of the time taken to complete each task in the project)
+- Issue's States Data
+- Label's Data
+- Closed Approved Issues Timeline
+- Just Closed Issues Timeline
+- All Issues Timeline
+- Reward's Data
+- Commenters Data
 
 ## Table of Contents
 

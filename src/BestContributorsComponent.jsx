@@ -21,7 +21,7 @@ const BestAgentCard = () => {
         setMaxContributorLogin(maxLogin);
       })
       .catch((error) => {
-        console.error("Ошибка при загрузке JSON-файла:", error);
+        console.error("Error:", error);
       });
   }, []);
 

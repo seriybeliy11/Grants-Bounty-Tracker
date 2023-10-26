@@ -11,12 +11,12 @@ function IssuesAllComponent() {
       try {
         const response = await fetch("./github_all_issues.json");
         if (!response.ok) {
-          throw new Error('Ошибка загрузки данных');
+          throw new Error('Error');
         }
         const jsonData = await response.json();
         setAllIssuesData(jsonData);
       } catch (error) {
-        console.error("Произошла ошибка при загрузке данных:", error);
+        console.error("Error:", error);
       }
     }
 

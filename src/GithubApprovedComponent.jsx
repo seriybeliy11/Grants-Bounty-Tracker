@@ -11,10 +11,10 @@ function ApprovedIssuesComponent() {
         .then((res) => res.json())
         .then((jsonData) => SetApprovedIssuesData(jsonData))
         .catch((error) => {
-          console.error("Ошибка загрузки данных из rewards.json:", error);
+          console.error("Error:", error);
         });
     } catch (error) {
-      console.error("Произошла ошибка при обработке данных:", error);
+      console.error("Error:", error);
     }
   }, []);
 

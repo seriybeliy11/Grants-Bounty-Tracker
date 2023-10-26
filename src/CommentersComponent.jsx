@@ -11,10 +11,10 @@ function CommentersComponent() {
         .then((res) => res.json())
         .then((jsonData) => setContribData(jsonData))
         .catch((error) => {
-          console.error("Ошибка загрузки данных из commentators.json:", error);
+          console.error("Error:", error);
         });
     } catch (error) {
-      console.error("Произошла ошибка при обработке данных:", error);
+      console.error("Error:", error);
     }
   }, []);
 

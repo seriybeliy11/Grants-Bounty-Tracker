@@ -10,10 +10,10 @@ function ContributorsComponent() {
         .then((res) => res.json())
         .then((jsonData) => setContributorsData(jsonData))
         .catch((error) => {
-          console.error("Ошибка загрузки данных из data_contributors.json:", error);
+          console.error("Error:", error);
         });
     } catch (error) {
-      console.error("Произошла ошибка при обработке данных:", error);
+      console.error("Error:", error);
     }
   }, []);
 

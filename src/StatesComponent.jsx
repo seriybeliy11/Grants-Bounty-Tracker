@@ -17,7 +17,7 @@ const ChartStates = () => {
         setChartData(formattedData);
       })
       .catch((error) => {
-        console.error('Ошибка при загрузке данных:', error);
+        console.error('Error:', error);
       });
   }, []);
 

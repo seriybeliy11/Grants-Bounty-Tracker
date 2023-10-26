@@ -15,7 +15,7 @@ const ThreatenedSpeciesQueChart = () => {
         }
       })
       .catch((error) => {
-        console.error("Ошибка загрузки данных:", error);
+        console.error("Error:", error);
       });
   }, [selectedYear]);
 
@@ -26,7 +26,7 @@ const ThreatenedSpeciesQueChart = () => {
   return (
     <Card>
       <div className="flex justify-between items-center">
-        <Title>Commits Data</Title>
+        <Title>Issue's Duration Data</Title>
         <div className="space-x-2">
           {["2022", "2023"].map((year) => (
             <button

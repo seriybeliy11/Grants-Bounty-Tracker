@@ -16,7 +16,7 @@ const IssuesQueCard = ({ isDarkTheme }) => {
         setTotalIssuesValue(totalValue);
       })
       .catch((error) => {
-        console.error("Ошибка при загрузке JSON-файла:", error);
+        console.error("Error:", error);
       });
   }, []);
 

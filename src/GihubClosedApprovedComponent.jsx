@@ -11,12 +11,12 @@ function JustClosedIssuesComponent() {
       try {
         const response = await fetch("./github_just_closed_issues.json");
         if (!response.ok) {
-          throw new Error('Ошибка загрузки данных');
+          throw new Error('Error');
         }
         const jsonData = await response.json();
         setJustClosedIssuesData(jsonData);
       } catch (error) {
-        console.error("Произошла ошибка при загрузке данных:", error);
+        console.error("Error:", error);
       }
     }
 

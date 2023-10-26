@@ -50,7 +50,7 @@ To get started with the tool, you need to install node.js. Download the installe
 2. Navigate to the project directory:
 
    ```bash
-   cd Grants-Bounty-Tracker
+   cd Grants-Bounty-Tracking
    ```
 
 3. Install dependencies:

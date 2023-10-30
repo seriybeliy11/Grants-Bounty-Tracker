@@ -1,0 +1,106 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@font-face {
+  font-family: 'Inter-600';
+  src: url('/Inter-600.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Inter-500';
+  src: url('/Inter-500.woff2') format('woff2');
+}
+.app-container{
+  background-color: bisque;
+}
+
+.theme-button-light {
+  background-color: #F7F9FB;
+  color: #333;
+}
+
+.theme-button-dark {
+  background-color: #333;
+  color: #fff;
+}
+
+.header{
+  background-color: #fff;
+}
+
+#root {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0;
+  padding: 0;
+}
+.tooltip {
+  position: absolute;
+  background-color: #333;
+  color: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 14px;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.1s ease-in-out;
+}
+
+.read-the-docs{
+  text-align: center;
+  font-size: 10px;
+  font-family: 'Inter-500';
+  src: url('/Inter-500.woff2') format('woff2');
+}
+
+.app-container {
+  max-width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: #F7F9FB;
+  transition: background-color 0.3s ease;
+}
+
+.header {
+  padding: 225px 20px;
+  height: 450px;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  display: flex;
+  background-image: url('logo-eye.svg');
+  background-position: right;
+  background-repeat: no-repeat;
+  transition: background-color 0.1s ease;
+}
+
+.c-agent-component {
+  margin-top: 30px;
+}
+
+.issues-metrics-text,
+.rewards-metrics-text,
+.commenters-metrics-text {
+  margin-top: 30px;
+}
+.main-content {
+  padding: 20px;
+}
+
+.content-container {
+  margin-top: 18px;
+}
+
+.main-content {
+  max-width: 70%;
+  margin: 0 auto;
+}

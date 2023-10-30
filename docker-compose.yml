@@ -1,0 +1,30 @@
+version: '3'
+services:
+  parsers:
+    build:
+      context: ./parsers
+    environment:
+      - GITHUB_TOKEN=YOUR_GITHUB_TOKEN
+    volumes:
+      - ./parsers:/app
+    depends_on:
+      - redis
+    networks:
+      - mynetwork
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - mynetwork
+
+  nats:
+    image: nats:latest
+    ports:
+      - "4222:4222"
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:

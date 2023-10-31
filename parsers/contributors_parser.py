@@ -1,23 +1,9 @@
-import os
 import requests
 import asyncio
 import nats
 import json
 import redis
 
-def get_github_token():
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-
-    if GITHUB_TOKEN is None:
-        raise ValueError("The environment variable GITHUB_TOKEN is not set.")
-
-    return GITHUB_TOKEN
-
-def get_issues(url, params, headers, page):
-    params["page"] = page
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()
 
 def save_data_to_redis(redis_client, key, data, expiration):
     redis_client.setex(key, expiration, json.dumps(data))
@@ -33,8 +19,7 @@ async def send_data_to_nats(topic, data):
     await nc.publish(topic, data.encode())
     await nc.close()
 
-async def get_contributors():
-    GITHUB_TOKEN = get_github_token()
+async def get_contributors(GITHUB_TOKEN):
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -61,9 +46,10 @@ async def get_contributors():
 
     return contributors_list
 
-async def main():
-    contributors = await get_contributors()
+async def main(GITHUB_TOKEN):
+    contributors = await get_contributors(GITHUB_TOKEN)
     await send_data_to_nats("github_contributors", json.dumps(contributors))
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    asyncio.run(main(GITHUB_TOKEN))

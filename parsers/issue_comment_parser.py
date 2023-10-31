@@ -1,17 +1,9 @@
-import os
 import requests
 import asyncio
 import nats
 import redis
 import json
 
-def get_github_token():
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-
-    if GITHUB_TOKEN is None:
-        raise ValueError("The environment variable GITHUB_TOKEN is not set.")
-
-    return GITHUB_TOKEN
 
 def get_issues(GITHUB_TOKEN, url, params, page):
     HEADERS = {
@@ -47,8 +39,7 @@ async def send_data_to_nats(topic, data):
     await nc.publish(topic, data.encode())
     await nc.close()
 
-async def main():
-    GITHUB_TOKEN = get_github_token()
+async def main(GITHUB_TOKEN):
     url = "https://api.github.com/repos/ton-society/grants-and-bounties/issues"
     params = {
         "per_page": 100,
@@ -62,7 +53,7 @@ async def main():
     if cached_data:
         result = cached_data
     else:
-        issues_with_comments = []
+        issues_with_comments = {}
 
         page = 1
         while True:
@@ -80,7 +71,10 @@ async def main():
             for i, issue in enumerate(issues):
                 issue_number = issue["number"]
                 comments_count = comment_counts[i]
-                issues_with_comments.append({"issue": str(issue_number), "Comments": comments_count})
+                created_at = issue["created_at"][:4]  # Извлекаем год из даты
+                if created_at not in issues_with_comments:
+                    issues_with_comments[created_at] = []
+                issues_with_comments[created_at].append({"issue": str(issue_number), "Comments": comments_count})
 
             page += 1
 
@@ -91,4 +85,5 @@ async def main():
     await send_data_to_nats("issue_comments", json.dumps(result))
 
 if __name__ == '__main__':
+    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
     asyncio.run(main())

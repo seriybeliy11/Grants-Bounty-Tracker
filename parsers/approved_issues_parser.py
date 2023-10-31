@@ -13,19 +13,29 @@ def get_github_token():
 
     return GITHUB_TOKEN
 
-def get_data_from_redis():
-    r = redis.StrictRedis(host='redis', port=6379, db=0)
-    data = r.get('approved_issues')
+def get_issues(url, params, headers, page):
+    params["page"] = page
+    response = requests.get(url, headers=headers, params=params)
+    response.raise_for_status()
+    return response.json()
+
+def save_data_to_redis(redis_client, key, data, expiration):
+    redis_client.setex(key, expiration, json.dumps(data))
+
+def get_data_from_redis(redis_client, key):
+    data = redis_client.get(key)
     if data:
-        return json.loads(data.decode('utf-8'))
+        return json.loads(data)
     return None
 
-def save_data_to_redis(data):
-    r = redis.StrictRedis(host='redis', port=6379, db=0)
-    r.setex('approved_issues', 4 * 60 * 60, json.dumps(data))
+async def send_data_to_nats(topic, data):
+    nc = await nats.connect("nats")
+    await nc.publish(topic, json.dumps(data).encode())
+    await nc.close()
 
 async def main():
-    cached_data = get_data_from_redis()
+    redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
+    cached_data = get_data_from_redis(redis_client, 'approved_issues')
     
     if cached_data:
         result = cached_data
@@ -44,12 +54,6 @@ async def main():
             "state": "all"
         }
 
-        def get_issues(page):
-            params["page"] = page
-            response = requests.get(url, headers=HEADERS, params=params)
-            response.raise_for_status()
-            return response.json()
-
         issues_by_year = {}
 
         approved_label = None
@@ -66,7 +70,7 @@ async def main():
 
         page = 1
         while True:
-            issues = get_issues(page)
+            issues = get_issues(url, params, HEADERS, page)
             if not issues:
                 break
 
@@ -84,13 +88,9 @@ async def main():
 
         result = [{"Date": year, "ClosedApprovedIssues": str(data["ClosedApprovedIssues"]), "ClosedTotalIssues": str(data["ClosedTotalIssues"])} for year, data in issues_by_year.items()]
 
-        save_data_to_redis(result)
+        save_data_to_redis(redis_client, 'approved_issues', result, 4 * 60 * 60)
 
-    nc = await nats.connect("nats")
-
-    await nc.publish("approved_issues", json.dumps(result).encode())
-
-    await nc.close()
+    await send_data_to_nats("approved_issues", result)
 
 if __name__ == '__main__':
     asyncio.run(main())

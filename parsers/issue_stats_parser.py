@@ -1,4 +1,3 @@
-import os
 import requests
 import asyncio
 import json
@@ -6,13 +5,6 @@ import nats
 import redis
 from datetime import datetime, timedelta
 
-def get_github_token():
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-
-    if GITHUB_TOKEN is None:
-        raise ValueError("Environment variable GITHUB_TOKEN is not set.")
-    
-    return GITHUB_TOKEN
 
 def get_issues(page, url, params, headers):
     params["page"] = page
@@ -43,8 +35,7 @@ async def send_data_to_nats(topic, data):
     await nc.publish(topic, data.encode())
     await nc.close()
 
-async def main():
-    GITHUB_TOKEN = get_github_token()
+async def main(GITHUB_TOKEN):
     HEADERS = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -78,10 +69,11 @@ async def main():
 
             page += 1
 
-        result = [{year: issues} for year, issues in duration_by_year.items()]
+        result = duration_by_year
         save_data_to_redis(redis_client, "issue_stats", result, timedelta(hours=4))
 
     await send_data_to_nats("issue_stats", json.dumps(result))
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    asyncio.run(main(GITHUB_TOKEN))

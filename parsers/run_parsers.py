@@ -1,3 +1,4 @@
+import os
 import asyncio
 import logging
 import approved_issues_parser
@@ -14,6 +15,14 @@ logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
+
+def get_github_token():
+    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+
+    if GITHUB_TOKEN is None:
+        raise ValueError("Environment variable GITHUB_TOKEN is not set.")
+    
+    return GITHUB_TOKEN
 
 async def run_parsers():
     parsers = [
@@ -35,7 +44,7 @@ async def run_parsers():
         logger = logging.getLogger(parser.__name__)
         try:
             logger.info(f"Starting {parser.__name__} ({completed_parsers}/{total_parsers})")
-            await parser.main()
+            await parser.main(get_github_token())
             completed_parsers += 1
             logger.info(f"Finished {parser.__name__} ({completed_parsers}/{total_parsers})")
         except Exception as e:

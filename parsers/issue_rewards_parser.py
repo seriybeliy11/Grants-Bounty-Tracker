@@ -1,17 +1,9 @@
-import os
 import requests
 import asyncio
 import json
 import nats
 import redis
 
-def get_github_token():
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-
-    if GITHUB_TOKEN is None:
-        raise ValueError("Environment variable GITHUB_TOKEN is not set.")
-    
-    return GITHUB_TOKEN
 
 def get_issues(page, url, params, headers):
     params["page"] = page
@@ -33,8 +25,7 @@ async def send_data_to_nats(topic, data):
     await nc.publish(topic, data.encode())
     await nc.close()
 
-async def main():
-    GITHUB_TOKEN = get_github_token()
+async def main(GITHUB_TOKEN):
     HEADERS = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -52,8 +43,8 @@ async def main():
     if cached_data:
         issue_rewards = cached_data
     else:
-        issue_rewards = []
-
+        issue_rewards = {}
+        
         page = 1
         while True:
             issues = get_issues(page, url, params, HEADERS)
@@ -61,13 +52,18 @@ async def main():
                 break
 
             for issue in issues:
+                created_at = issue["created_at"][:4]
                 body = issue.get("body")
                 if body:
                     reward_info = body.split('$')
                     if len(reward_info) >= 2:
                         try:
                             reward = int(reward_info[1].split(' ')[0])
-                            issue_rewards.append({"Issue Number": str(issue["number"]), "Rewards (th. $)": reward})
+                            issue_info = {"Issue Number": str(issue["number"]), "Rewards (th. $)": reward}
+                            if created_at in issue_rewards:
+                                issue_rewards[created_at].append(issue_info)
+                            else:
+                                issue_rewards[created_at] = [issue_info]
                         except ValueError:
                             pass
 
@@ -78,4 +74,5 @@ async def main():
     await send_data_to_nats("issue_rewards", json.dumps(issue_rewards))
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    asyncio.run(main(GITHUB_TOKEN))

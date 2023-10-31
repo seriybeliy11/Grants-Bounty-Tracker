@@ -1,17 +1,9 @@
-import os
 import requests
 import asyncio
 import json
 import nats
 import redis
 
-def get_github_token():
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
-
-    if GITHUB_TOKEN is None:
-        raise ValueError("The environment variable GITHUB_TOKEN is not set.")
-    
-    return GITHUB_TOKEN
 
 def get_issues(url, params, headers, page):
     params["page"] = page
@@ -33,8 +25,7 @@ async def send_data_to_nats(topic, data):
     await nc.publish(topic, data.encode())
     await nc.close()
 
-async def main():
-    GITHUB_TOKEN = get_github_token()
+async def main(GITHUB_TOKEN):
     HEADERS = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -52,7 +43,7 @@ async def main():
     if cached_data:
         labels_result = cached_data
     else:
-        labels_count = {}
+        labels_by_year = {}
 
         page = 1
         while True:
@@ -62,17 +53,27 @@ async def main():
 
             for issue in issues:
                 labels = issue["labels"]
+                created_at = issue["created_at"][:4]  # Извлекаем год
+                if created_at not in labels_by_year:
+                    labels_by_year[created_at] = {}
                 for label in labels:
                     label_name = label["name"]
-                    labels_count[label_name] = labels_count.get(label_name, 0) + 1
+                    if label_name not in labels_by_year[created_at]:
+                        labels_by_year[created_at][label_name] = 1
+                    else:
+                        labels_by_year[created_at][label_name] += 1
 
             page += 1
 
-        labels_result = [{"label": label, "value": count} for label, count in labels_count.items()]
+        labels_result = {
+            year: [{"label": label, "value": count} for label, count in labels_by_year[year].items()]
+            for year in labels_by_year
+            }
 
         save_data_to_redis(redis_client, "labels_stats", labels_result, 4 * 3600)
 
     await send_data_to_nats("labels_stats", json.dumps(labels_result))
 
 if __name__ == '__main__':
-    asyncio.run(main())
+    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    asyncio.run(main(GITHUB_TOKEN))

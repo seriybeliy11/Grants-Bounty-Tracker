@@ -5,12 +5,58 @@ import nats
 import json
 import redis
 
-
-async def main():
+def get_github_token():
     GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+
     if GITHUB_TOKEN is None:
         raise ValueError("The environment variable GITHUB_TOKEN is not set.")
+    
+    return GITHUB_TOKEN
 
+def get_issues(url, params, headers, page):
+    params["page"] = page
+    response = requests.get(url, headers=headers, params=params)
+    response.raise_for_status()
+    return response.json()
+
+def save_data_to_redis(redis_client, key, data, expiration):
+    redis_client.setex(key, expiration, json.dumps(data))
+
+def get_data_from_redis(redis_client, key):
+    data = redis_client.get(key)
+    if data:
+        return data.decode('utf-8')
+    return None
+
+async def send_data_to_nats(topic, data):
+    nc = await nats.connect("nats")
+    await nc.publish(topic, json.dumps(data).encode())
+    await nc.close()
+
+def process_closed_issues(url, params, headers, redis_client):
+    closed_issues_by_year = {}
+    page = 1
+
+    while True:
+        issues = get_issues(url, params, headers, page)
+        if not issues:
+            break
+
+        for issue in issues:
+            closed_at = issue["closed_at"]
+            if closed_at:
+                year = closed_at[:4]
+                closed_issues_by_year[year] = closed_issues_by_year.get(year, 0) + 1
+
+        page += 1
+
+    result = [{"Dates": year, "Closed Issues": count} for year, count in closed_issues_by_year.items()]
+
+    save_data_to_redis(redis_client, "closed_issues", result, 4 * 60 * 60)
+    return result
+
+async def main():
+    GITHUB_TOKEN = get_github_token()
     HEADERS = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
@@ -22,47 +68,16 @@ async def main():
         "state": "closed"
     }
 
-    def get_issues(page):
-        params["page"] = page
-        response = requests.get(url, headers=HEADERS, params=params)
-        response.raise_for_status()
-        return response.json()
-
     redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
 
-    redis_data = redis_client.get("closed_issues")
+    redis_data = get_data_from_redis(redis_client, "closed_issues")
 
     if redis_data:
-        result = redis_data.decode('utf-8')
+        result = redis_data
     else:
-        closed_issues_by_year = {}
+        result = process_closed_issues(url, params, HEADERS, redis_client)
 
-        page = 1
-        while True:
-            issues = get_issues(page)
-            if not issues:
-                break
-
-            for issue in issues:
-                closed_at = issue["closed_at"]
-                if closed_at:
-                    year = closed_at[:4]
-                    closed_issues_by_year[year] = closed_issues_by_year.get(year, 0) + 1
-
-            page += 1
-
-        result = [{"Dates": year, "Closed Issues": count} for year, count in closed_issues_by_year.items()]
-
-        redis_client.setex("closed_issues", 4 * 60 * 60, json.dumps(result))
-
-    async def send_result_to_nats():
-        nc = await nats.connect("nats")
-
-        await nc.publish("closed_issues", result.encode())
-
-        await nc.close()
-
-    await send_result_to_nats()
+    await send_data_to_nats("closed_issues", result)
 
 if __name__ == '__main__':
     asyncio.run(main())

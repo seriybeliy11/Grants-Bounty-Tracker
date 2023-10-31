@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */ 
+/** @type {import('tailwindcss').Config} */
 
 module.exports = {
   darkMode: "class",
@@ -57,7 +57,7 @@ module.exports = {
           background: {
             muted: "#131A2B", // custom
             subtle: "#1f2937", // gray-800
-            DEFAULT: "#232328;", // gray-900
+            DEFAULT: "#2c2c2e", // gray-900
             emphasis: "#d1d5db", // gray-300
           },
           border: {

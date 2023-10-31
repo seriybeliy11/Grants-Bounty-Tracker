@@ -10,11 +10,11 @@ const ThemeButton = () => {
 
     if (isDarkTheme) {
       rootElement.classList.remove('dark');
-      document.querySelector('.app-container').style.backgroundColor = '#F7F9FB';
+      document.querySelector('.app-container').style.backgroundColor = '#f4f4f5';
       document.querySelector('.header').style.backgroundColor = '#ffffff';
     } else {
       rootElement.classList.add('dark');
-      document.querySelector('.app-container').style.backgroundColor = '#333333';
+      document.querySelector('.app-container').style.backgroundColor = '#1c1c1e';
       document.querySelector('.header').style.backgroundColor = '#2c2c2e';
     }
   };
@@ -23,7 +23,14 @@ const ThemeButton = () => {
     <button
       className={`theme-button ${isDarkTheme ? 'theme-button-dark' : 'theme-button-light'}`}
       onClick={toggleTheme}
-      style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        width: '60px',
+        height: '60px'
+      }}
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +38,7 @@ const ThemeButton = () => {
         viewBox="0 0 24 24"
         strokeWidth="1.5"
         stroke="currentColor"
-        className="w-6 h-6 transition-all duration-300"
+        className="w-full h-full transition-all duration-300"
       >
         {isDarkTheme ? (
           <path
@@ -48,6 +55,7 @@ const ThemeButton = () => {
         )}
       </svg>
     </button>
+
   );
 };
 

@@ -1,37 +1,14 @@
-![egw](https://github.com/seriybeliy11/Grants-Bounty-Tracker/assets/129196368/90a85183-1f25-4982-8db4-4f99fe9a8aaf)
-
-
-
 # Grants & Bounties Tracker
 
 **GitHub Analytics Dashboard**
 
 ## Description
 
-GitHub Analytics Dashboard is a web application and analytical tool designed for tracking various metrics of a TON "Grants & Bounties", particularly those related to crowdsourced development. The metrics include rewards, the number of resolved and closed issues, participant counts, and the quantity of comments on issues.
-
-## Functional
-Our tool shows many key metrics for an organization, including:
-- 👨‍👨‍👦‍👦Contributor's Value
-- 🔥Best Contributor
-- 📌Issue's Value
-- ⌚Average task completion time
-- 📍Biggest award received
-- 👀Highest number of comments
-
-Graphs visualize the following data:
-- Contributors Data (The graph presents information about the number of actions of the named contributors)
-- Issue's Data (The task duration graph is a visualization of the time taken to complete each task in the project)
-- Issue's States Data
-- Label's Data
-- Closed Approved Issues Timeline
-- Just Closed Issues Timeline
-- All Issues Timeline
-- Reward's Data
-- Commenters Data
+GitHub Analytics Dashboard is a web application and analytical tool designed for tracking various metrics of a GitHub project, particularly those related to crowdsourced development. The metrics include rewards, the number of resolved and closed issues, participant counts, and the quantity of comments on issues.
 
 ## Table of Contents
 
+- [Features](#features)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Configuration](#configuration)
@@ -39,7 +16,6 @@ Graphs visualize the following data:
 - [License](#license)
 
 ## Installation
-To get started with the tool, you need to install node.js. Download the installer according to your operating system and install - https://nodejs.org/en
 
 1. Clone the repository:
 
@@ -67,7 +43,7 @@ To get started with the tool, you need to install node.js. Download the installe
    python Tracking.py
    ```
 
-   This will start the development server, and you can access the dashboard at [http://localhost:5173](http://localhost:5173).
+   This will start the development server, and you can access the dashboard at [http://localhost:3157](http://localhost:3157).
 
 2. Explore the GitHub project metrics with the provided visualizations.
 

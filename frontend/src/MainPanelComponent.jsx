@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Metric, Text, Bold, Title } from "@tremor/react";
+import { Tooltip } from 'react-tooltip';
 
 const AgentQueCard = () => {
   const [loginCount, setLoginCount] = useState(null);
@@ -27,9 +28,17 @@ const AgentQueCard = () => {
 
   return (
     <div style={{ position: 'relative' }}>
-      <Card>
-        <Metric style = {{fontSize: '13px'}}>👨‍👨‍👦‍👦Contributor's Value</Metric>
-        <Metric style = {{fontSize: '22px'}}>{loginCount}</Metric>
+      <Card style={{borderRadius: '16px'}}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Metric style = {{fontSize: '15px', fontFamily:'Manrope-900'}}>Contributor's Value</Metric>
+          <a data-tooltip-id="my-anchor-element">💎</a>
+              <Tooltip id="my-anchor-element">
+                  <p>The graph presents information about the number of actions of the named contributors.</p>
+                  <p>On the x-axis, the nicknames of the contributors are listed,</p>
+                  <p>while the y-axis represents the quantity of contributions to the organization.</p>
+              </Tooltip>
+        </div>
+        <Metric style = {{fontSize: '27px', fontFamily:'Manrope-900'}}>{loginCount}</Metric>
       </Card>
     </div>
   );

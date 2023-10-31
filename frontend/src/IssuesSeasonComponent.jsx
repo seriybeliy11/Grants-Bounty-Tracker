@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Title, BarChart, Subtitle } from "@tremor/react";
+import { Tooltip } from 'react-tooltip';
 
 const ThreatenedSpeciesQueChart = () => {
   const [selectedYear, setSelectedYear] = useState("2022");
@@ -24,9 +25,17 @@ const ThreatenedSpeciesQueChart = () => {
   };
 
   return (
-    <Card>
+    <Card style={{borderRadius: '16px'}}>
       <div className="flex justify-between items-center">
-        <Title>Issue's Duration Data</Title>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
+        <Title style={{fontFamily: 'Manrope-600'}}>Issue's Duration Data</Title>
+        <a data-tooltip-id="my-anchor-element">💎</a>
+              <Tooltip id="my-anchor-element">
+                  <p>The graph presents information about the number of actions of the named contributors.</p>
+                  <p>On the x-axis, the nicknames of the contributors are listed,</p>
+                  <p>while the y-axis represents the quantity of contributions to the organization.</p>
+              </Tooltip>
+      </div>
         <div className="space-x-2">
           {["2022", "2023"].map((year) => (
             <button
@@ -41,7 +50,7 @@ const ThreatenedSpeciesQueChart = () => {
           ))}
         </div>
       </div>
-      <Subtitle>
+      <Subtitle style={{fontFamily: 'Manrope-900'}}>
         The task duration graph is a visualization of the time taken to complete each task in the project
       </Subtitle>
       {chartData && chartData.length > 0 ? (

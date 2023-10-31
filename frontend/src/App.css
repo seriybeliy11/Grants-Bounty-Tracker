@@ -4,14 +4,33 @@
 
 
 @font-face {
-  font-family: 'Inter-600';
-  src: url('/Inter-600.woff2') format('woff2');
+  font-family: 'Manrope-600';
+  src: url('/Manrope-Light.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
 }
 
 @font-face {
-  font-family: 'Inter-500';
-  src: url('/Inter-500.woff2') format('woff2');
+  font-family: 'Manrope-500';
+  src: url('/Manrope-ExtraLight.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
 }
+
+@font-face {
+  font-family: 'Manrope-700';
+  src: url('/Manrope-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Manrope-900';
+  src: url('/Manrope-ExtraBold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+}
+
 .app-container{
   background-color: bisque;
 }
@@ -28,6 +47,15 @@
 
 .header{
   background-color: #fff;
+  padding: 225px 20px;
+  height: 450px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
+  display: flex;
+  background-image: url('Friom.svg');
+  background-position: суcenter;
+  background-repeat: no-repeat;
+  transition: background-color 0.1s ease;
 }
 
 #root {
@@ -62,6 +90,7 @@
 }
 
 .app-container {
+  justify-content: 'center';
   max-width: 100%;
   margin: 0 auto;
   display: flex;
@@ -74,17 +103,20 @@
 .header {
   padding: 225px 20px;
   height: 450px;
-  border-bottom-left-radius: 20px;
-  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 32px;
+  border-bottom-right-radius: 32px;
   display: flex;
-  background-image: url('logo-eye.svg');
-  background-position: right;
   background-repeat: no-repeat;
   transition: background-color 0.1s ease;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  flex-direction: column;
+  align-items: center;
 }
 
 .c-agent-component {
-  margin-top: 30px;
+  margin-top: 20px;
 }
 
 .issues-metrics-text,
@@ -100,7 +132,37 @@
   margin-top: 18px;
 }
 
+
+
+.card{
+  border-radius: 20px;
+}
+
 .main-content {
-  max-width: 70%;
+  max-width: 1600px;
+  justify-content: center;
   margin: 0 auto;
+  overflow-x: hidden; /* Запрет горизонтальной прокрутки и выхода за пределы экрана */
+}
+
+@media screen and (max-width: 1600px) {
+  .main-content {
+    max-width: 100%;
+  }
+}
+
+html, body {
+  overflow-x: hidden;
+}
+
+.options {
+  margin-bottom: -40px;
+}
+
+.toolb {
+    justify-content: center; /* Центрирование по горизонтали */
+    position: relative;
+    max-width: 60px;
+    max-height: 60px;
+    top: -90px;
 }

@@ -1,0 +1,15 @@
+[
+  {
+    "header": "{login}",
+    "body": "{assistant_reply}"
+  },
+  {
+    "header": "{login}",
+    "body": "{assistant_reply}"
+  },
+  {
+    "header": "{login}",
+    "body": "{assistant_reply}"
+  }
+  // Добавьте столько объектов, сколько вам нужно
+]

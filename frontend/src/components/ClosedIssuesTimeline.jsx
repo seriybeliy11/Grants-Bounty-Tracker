@@ -12,7 +12,8 @@ const JustClosedIssuesComponent = () => {
         if (!response.ok) {
           throw new Error('Error');
         }
-        const jsonData = await response.json();
+        const data = await response.json();
+        const jsonData = data.result;
         setJustClosedIssuesData(jsonData);
       } catch (error) {
         console.error("Error:", error);

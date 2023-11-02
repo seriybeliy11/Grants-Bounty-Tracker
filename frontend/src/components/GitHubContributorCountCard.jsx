@@ -8,7 +8,7 @@ const AgentQueCard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/github_contributors"); // Replace with the correct API endpoint
+        const response = await fetch(); // Replace with the correct API endpoint
         if (!response.ok) {
           throw new Error('Error');
         }

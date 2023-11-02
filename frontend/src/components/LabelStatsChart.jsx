@@ -17,7 +17,8 @@ const ChartsLabels = () => {
         if (!response.ok) {
           throw new Error('Error');
         }
-        const data = await response.json();
+        const getData = await response.json();
+        const data = getData.result;
         if (data[selectedYear]) {
           const formattedData = data[selectedYear].map(item => ({
             que: item.value,

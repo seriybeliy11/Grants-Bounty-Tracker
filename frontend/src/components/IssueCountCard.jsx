@@ -8,15 +8,24 @@ const IssuesQueCard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/issue_type"); // Replace with the correct URL for your server's API endpoint
+        const response = await fetch("http://localhost:3000/issue_type"); // Замените на правильный URL для вашего сервера
         if (!response.ok) {
           throw new Error('Error');
         }
         const data = await response.json();
-        const jsonData = data.result;
-        const closedIssuesValue = jsonData.state.find((item) => item.state === 'closed').value;
-        const openIssuesValue = jsonData.state.find((item) => item.state === 'open').value;
-        const totalValue = closedIssuesValue + openIssuesValue;
+
+        const result = data.result;
+
+        const years = Object.keys(result);
+        let totalValue = 0;
+
+        years.forEach(year => {
+          const yearData = result[year];
+          const closedIssuesValue = yearData.find(item => item.state === 'closed').value;
+          const openIssuesValue = yearData.find(item => item.state === 'open').value;
+          totalValue += closedIssuesValue + openIssuesValue;
+        });
+
         setTotalIssuesValue(totalValue);
       } catch (error) {
         console.error("Error:", error);

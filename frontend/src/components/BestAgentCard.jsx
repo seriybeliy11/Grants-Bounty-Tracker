@@ -12,7 +12,9 @@ const BestAgentCard = () => {
         if (!response.ok) {
           throw new Error('Error');
         }
-        const jsonData = await response.json();
+        const data = await response.json();
+        const jsonData = data.result;
+        console.log(jsonData);
 
         let maxContributions = -Infinity;
         let maxLogin = null;

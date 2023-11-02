@@ -11,7 +11,8 @@ const RewardsComponent = () => {
       try {
         const response = await fetch("http://localhost:3000/issue_rewards"); // Replace with the correct API endpoint URL
         if (response.ok) {
-          const jsonData = await response.json();
+          const data = await response.json();
+          const jsonData = data.result;
           setRewardsData(jsonData);
         } else {
           console.error("Error:", response.status);

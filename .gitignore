@@ -1,0 +1,26 @@
+# Ignore temporary files and directories
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.bak
+*.log
+
+# Ignore build tool-generated directories and files
+/node_modules/
+/build/
+/dist/
+/.cache/
+
+# Ignore local settings and dependencies
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+npm-debug.log
+yarn-error.log
+
+# Ignore .pyc cache and venv directories
+__pycache__/
+venv/

@@ -1,55 +1,42 @@
-import requests
 import asyncio
-import nats
-import json
-import redis
+import aiohttp
+import ujson
+from redis import asyncio as aioredis
 
+async def save_data_to_redis(redis_client, key, data, expiration):
+    await redis_client.setex(key, expiration, ujson.dumps(data))
 
-def save_data_to_redis(redis_client, key, data, expiration):
-    redis_client.setex(key, expiration, json.dumps(data))
-
-def get_data_from_redis(redis_client, key):
-    data = redis_client.get(key)
+async def get_data_from_redis(redis_client, key):
+    data = await redis_client.get(key)
     if data:
-        return json.loads(data)
+        return ujson.loads(data)
     return None
 
-async def send_data_to_nats(topic, data):
-    nc = await nats.connect("nats")
-    await nc.publish(topic, data.encode())
-    await nc.close()
-
-async def get_contributors(GITHUB_TOKEN):
+async def main(GITHUB_TOKEN):
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
         "Accept": "application/vnd.github.v3+json"
     }
     url = "https://api.github.com/repos/ton-society/grants-and-bounties/contributors"
-    redis_conn = redis.StrictRedis(host='redis', port=6379, db=0)
 
-    contributors_data = get_data_from_redis(redis_conn, 'github_contributors')
+    redis_conn = await aioredis.from_url("redis://redis")
 
-    if contributors_data:
-        contributors_list = contributors_data
-    else:
-        response = requests.get(url, headers=headers)
-        response.raise_for_status()
-        contributors_data = response.json()
-        contributors_list = [
-            {
-                "login": contributor["login"],
-                "contributions": float(contributor["contributions"])
-            }
-            for contributor in contributors_data
-        ]
-        save_data_to_redis(redis_conn, 'github_contributors', contributors_list, 4 * 3600)
+    contributors_data = await get_data_from_redis(redis_conn, 'github_contributors')
 
-    return contributors_list
-
-async def main(GITHUB_TOKEN):
-    contributors = await get_contributors(GITHUB_TOKEN)
-    await send_data_to_nats("github_contributors", json.dumps(contributors))
+    if not contributors_data:
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url, headers=headers) as response:
+                response.raise_for_status()
+                contributors_data = await response.json()
+                contributors_list = [
+                    {
+                        "login": contributor["login"],
+                        "contributions": float(contributor["contributions"])
+                    }
+                    for contributor in contributors_data
+                ]
+                await save_data_to_redis(redis_conn, 'github_contributors', contributors_list, 4 * 3600)
 
 if __name__ == '__main__':
-    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"
     asyncio.run(main(GITHUB_TOKEN))

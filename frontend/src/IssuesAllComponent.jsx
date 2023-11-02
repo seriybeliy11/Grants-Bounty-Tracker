@@ -7,21 +7,22 @@ function IssuesAllComponent() {
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
 
-  // useEffect(() => {
-  //   async function connectToNATS() {
-  //     const nc = await connect({ servers: "ws://localhost:8080" });
-  //     const sc = StringCodec();
-  //     const sub = nc.subscribe("count_issues");
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const response = await fetch("./github_all_issues.json");
+        if (!response.ok) {
+          throw new Error('Error');
+        }
+        const jsonData = await response.json();
+        setAllIssuesData(jsonData);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    }
 
-  //     for await (const m of sub) {
-  //       console.log(`[${sub.getProcessed()}]: ${sc.decode(m.data)}`);
-  //       const jsonData = JSON.parse(sc.decode(m.data));
-  //       setAllIssuesData(jsonData);
-  //     }
-  //   }
-
-  //   connectToNATS();
-  // }, []);
+    fetchData();
+  }, []);
 
   return (
     <div>

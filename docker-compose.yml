@@ -10,8 +10,8 @@ services:
   parsers:
     build:
       context: ./parsers
-    environment:
-      - GITHUB_TOKEN=YOUR_GITHUB_TOKEN
+    env_file:
+      - .env
     volumes:
       - ./parsers:/app
     depends_on:
@@ -21,7 +21,7 @@ services:
 
   frontend:
     build:
-      context: ./frontend_new
+      context: ./frontend
     ports:
       - "5173:5173"
       - "3000:3000"

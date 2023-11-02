@@ -1,37 +1,28 @@
-import requests
 import asyncio
-import nats
-import json
-import redis
+import aiohttp
+import ujson
+from redis import asyncio as aioredis
 
-
-def get_issues(url, params, headers, page):
+async def get_issues(session, url, params, headers, page):
     params["page"] = page
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()
+    async with session.get(url, headers=headers, params=params) as response:
+        response.raise_for_status()
+        return await response.json(loads=ujson.loads)
 
-def save_data_to_redis(redis_client, key, data, expiration):
-    redis_client.setex(key, expiration, json.dumps(data))
+async def save_data_to_redis(redis_client, key, data, expiration):
+    await redis_client.setex(key, expiration, ujson.dumps(data))
 
-def get_data_from_redis(redis_client, key):
-    data = redis_client.get(key)
+async def get_data_from_redis(redis_client, key):
+    data = await redis_client.get(key)
     if data:
-        return json.loads(data)
+        return ujson.loads(data)
     return None
 
-async def send_data_to_nats(topic, data):
-    nc = await nats.connect("nats")
-    await nc.publish(topic, json.dumps(data).encode())
-    await nc.close()
-
 async def main(GITHUB_TOKEN):
-    redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
-    cached_data = get_data_from_redis(redis_client, 'approved_issues')
+    redis_client = await aioredis.from_url("redis://redis")
+    cached_data = await get_data_from_redis(redis_client, 'approved_issues')
     
-    if cached_data:
-        result = cached_data
-    else:
+    if not cached_data:
         HEADERS = {
             "Authorization": f"Bearer {GITHUB_TOKEN}",
             "Accept": "application/vnd.github.v3+json"
@@ -49,39 +40,40 @@ async def main(GITHUB_TOKEN):
         approved_label = None
         labels_url = "https://api.github.com/repos/ton-society/grants-and-bounties/labels"
 
-        response = requests.get(labels_url, headers=HEADERS)
-        response.raise_for_status()
-        labels = response.json()
+        async with aiohttp.ClientSession(headers=HEADERS) as session:
+            async with session.get(labels_url) as response:
+                response.raise_for_status()
+                labels = await response.json(loads=ujson.loads)
 
-        for label in labels:
-            if label["name"] == "Approved":
-                approved_label = label
-                break
+                for label in labels:
+                    if label["name"] == "Approved":
+                        approved_label = label
+                        break
 
-        page = 1
-        while True:
-            issues = get_issues(url, params, HEADERS, page)
-            if not issues:
-                break
+            page = 1
+            while True:
+                issues = await get_issues(session, url, params, HEADERS, page)
+                if not issues:
+                    break
 
-            for issue in issues:
-                created_at = issue["created_at"][:4]
-                year_data = issues_by_year.setdefault(created_at, {"ClosedApprovedIssues": 0, "ClosedTotalIssues": 0})
+                for issue in issues:
+                    created_at = issue["created_at"][:4]
+                    year_data = issues_by_year.setdefault(created_at, {"ClosedApprovedIssues": 0, "ClosedTotalIssues": 0})
 
-                if issue["state"] == "closed":
-                    year_data["ClosedTotalIssues"] += 1
+                    if issue["state"] == "closed":
+                        year_data["ClosedTotalIssues"] += 1
 
-                    if approved_label and approved_label in issue["labels"]:
-                        year_data["ClosedApprovedIssues"] += 1
+                        if approved_label and approved_label in issue["labels"]:
+                            year_data["ClosedApprovedIssues"] += 1
 
-            page += 1
+                page += 1
 
-        result = [{"Date": year, "ClosedApprovedIssues": str(data["ClosedApprovedIssues"]), "ClosedTotalIssues": str(data["ClosedTotalIssues"])} for year, data in issues_by_year.items()]
+        sorted_years = sorted(issues_by_year.keys())
 
-        save_data_to_redis(redis_client, 'approved_issues', result, 4 * 60 * 60)
-
-    await send_data_to_nats("approved_issues", result)
+        result = [{"Date": year, "ClosedApprovedIssues": str(issues_by_year[year]["ClosedApprovedIssues"]), "ClosedTotalIssues": str(issues_by_year[year]["ClosedTotalIssues"])} for year in sorted_years]
+        
+        await save_data_to_redis(redis_client, 'approved_issues', result, 4 * 60 * 60)
 
 if __name__ == '__main__':
-    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"
     asyncio.run(main(GITHUB_TOKEN))

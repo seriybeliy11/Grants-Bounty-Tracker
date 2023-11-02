@@ -1,0 +1,12 @@
+{
+  "state": [
+    {
+      "state": "closed",
+      "value": 256
+    },
+    {
+      "state": "open",
+      "value": 72
+    }
+  ]
+}

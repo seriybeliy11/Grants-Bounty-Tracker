@@ -11,7 +11,7 @@ services:
     build:
       context: ./parsers
     environment:
-      - GITHUB_TOKEN=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
+      - GITHUB_TOKEN=YOUR_GITHUB_TOKEN
     volumes:
       - ./parsers:/app
     depends_on:

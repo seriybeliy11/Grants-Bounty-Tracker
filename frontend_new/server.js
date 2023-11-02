@@ -23,45 +23,58 @@ redisClient.connect((err) => {
 
 app.use(cors());
 
+app.get('/github_contributors', async (req, res) => {
+  const value = await redisClient.get('github_contributors');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
+});
+
+app.get('/issue_comments', async (req, res) => {
+  const value = await redisClient.get('issue_comments');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
+});
+
+app.get('/closed_issues', async (req, res) => {
+  const value = await redisClient.get('closed_issues');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
+});
+
+app.get('/approved_issues', async (req, res) => {
+  const value = await redisClient.get('approved_issues');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
+});
+
 app.get('/count_issues', async (req, res) => {
   const value = await redisClient.get('count_issues');
   const parsedValue = JSON.parse(value);
   res.json({ result: parsedValue });
 });
 
-app.get('/endpoint2', async (req, res) => {
-  const value = await redisClient.get('key2');
-  res.json({ result: value });
+app.get('/issue_type', async (req, res) => {
+  const value = await redisClient.get('issue_type');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
 });
 
-app.get('/endpoint3', async (req, res) => {
-  const value = await redisClient.get('key3');
-  res.json({ result: value });
+app.get('/issue_stats', async (req, res) => {
+  const value = await redisClient.get('issue_stats');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
 });
 
-app.get('/endpoint4', async (req, res) => {
-  const value = await redisClient.get('key4');
-  res.json({ result: value });
+app.get('/labels_stats', async (req, res) => {
+  const value = await redisClient.get('labels_stats');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
 });
 
-app.get('/endpoint5', async (req, res) => {
-  const value = await redisClient.get('key5');
-  res.json({ result: value });
-});
-
-app.get('/endpoint6', async (req, res) => {
-  const value = await redisClient.get('key6');
-  res.json({ result: value });
-});
-
-app.get('/endpoint7', async (req, res) => {
-  const value = await redisClient.get('key7');
-  res.json({ result: value });
-});
-
-app.get('/endpoint8', async (req, res) => {
-  const value = await redisClient.get('key8');
-  res.json({ result: value });
+app.get('/issue_rewards', async (req, res) => {
+  const value = await redisClient.get('issue_rewards');
+  const parsedValue = JSON.parse(value);
+  res.json({ result: parsedValue });
 });
 
 app.listen(port, () => {

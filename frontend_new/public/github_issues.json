@@ -1,12 +1,22 @@
 {
-  "state": [
+  "2022": [
     {
       "state": "closed",
-      "value": 256
+      "value": 98
     },
     {
       "state": "open",
-      "value": 72
+      "value": 11
+    }
+  ],
+  "2023": [
+    {
+      "state": "closed",
+      "value": 184
+    },
+    {
+      "state": "open",
+      "value": 59
     }
   ]
 }

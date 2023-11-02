@@ -1,29 +1,23 @@
-import requests
+import aiohttp
 import asyncio
-import json
-import nats
-import redis
+import ujson
+from redis import asyncio as aioredis
 
+async def get_issues(url, params, headers, page):
+    async with aiohttp.ClientSession() as session:
+        params["page"] = page
+        async with session.get(url, headers=headers, params=params) as response:
+            response.raise_for_status()
+            return await response.json(loads=ujson.loads)
 
-def get_issues(url, params, headers, page):
-    params["page"] = page
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()
+async def save_data_to_redis(redis_client, key, data, expiration):
+    await redis_client.setex(key, expiration, ujson.dumps(data))
 
-def save_data_to_redis(redis_client, key, data, expiration):
-    redis_client.setex(key, expiration, json.dumps(data))
-
-def get_data_from_redis(redis_client, key):
-    data = redis_client.get(key)
+async def get_data_from_redis(redis_client, key):
+    data = await redis_client.get(key)
     if data:
-        return json.loads(data)
+        return ujson.loads(data)
     return None
-
-async def send_data_to_nats(topic, data):
-    nc = await nats.connect("nats")
-    await nc.publish(topic, data.encode())
-    await nc.close()
 
 async def main(GITHUB_TOKEN):
     HEADERS = {
@@ -36,17 +30,15 @@ async def main(GITHUB_TOKEN):
         "state": "all"
     }
 
-    r = redis.Redis(host='redis', port=6379, db=0)
+    redis_client = await aioredis.from_url("redis://redis")
 
-    cached_data = get_data_from_redis(r, "count_issues")
-    
-    if cached_data:
-        result = cached_data
-    else:
+    cached_data = await get_data_from_redis(redis_client, "count_issues")
+
+    if not cached_data:
         issues_by_year = {}
         page = 1
         while True:
-            issues = get_issues(url, params, HEADERS, page)
+            issues = await get_issues(url, params, HEADERS, page)
             if not issues:
                 break
 
@@ -56,12 +48,12 @@ async def main(GITHUB_TOKEN):
 
             page += 1
 
-        result = [{"Dates": year, "All Issues": count} for year, count in issues_by_year.items()]
+        sorted_years = sorted(issues_by_year.keys())
 
-        save_data_to_redis(r, "count_issues", result, 14400)
+        result = [{"Dates": year, "All Issues": issues_by_year[year]} for year in sorted_years]
 
-    await send_data_to_nats("count_issues", json.dumps(result))
+        await save_data_to_redis(redis_client, "count_issues", result, 14400)
 
 if __name__ == '__main__':
-    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"
     asyncio.run(main(GITHUB_TOKEN))

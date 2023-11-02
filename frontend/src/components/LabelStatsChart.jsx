@@ -8,27 +8,35 @@ const ChartsLabels = () => {
   const [chartData, setChartData] = useState([]);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipText, setTooltipText] = useState('');
-
-  const availableYears = ['2022', '2023']; // Обновите этот массив с нужными годами
+  const availableYears = ['2022', '2023'];
 
   useEffect(() => {
-    fetch('label_counts.json')
-      .then((response) => response.json())
-      .then((data) => {
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:3000/labels_stats'); // Update the URL as needed
+        if (!response.ok) {
+          throw new Error('Error');
+        }
+        const data = await response.json();
         if (data[selectedYear]) {
-          const formattedData = data[selectedYear].map((item) => ({
+          const formattedData = data[selectedYear].map(item => ({
             que: item.value,
             label: item.label,
           }));
           setChartData(formattedData);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error:', error);
-      });
+      }
+    }
+    fetchData();
   }, [selectedYear]);
 
-  const handleMouseEnter = (label) => {
+  const handleYearChange = year => {
+    setSelectedYear(year);
+  };
+
+  const handleMouseEnter = label => {
     setTooltipText(label);
     setShowTooltip(true);
   };
@@ -36,10 +44,6 @@ const ChartsLabels = () => {
   const handleMouseLeave = () => {
     setShowTooltip(false);
     setTooltipText('');
-  };
-
-  const handleYearChange = (year) => {
-    setSelectedYear(year);
   };
 
   return (
@@ -53,11 +57,11 @@ const ChartsLabels = () => {
           </Tooltip>
         </div>
         <div className="space-x-2">
-          {availableYears.map((year) => (
+          {availableYears.map(year => (
             <button
               key={year}
               className={`px-2 py-1 rounded ${
-                selectedYear === year ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
+                selectedYear === year ? 'bg-blue-500 text-white' : 'bg-gray-200 text-gray-700'
               }`}
               onClick={() => handleYearChange(year)}
             >

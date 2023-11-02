@@ -2,32 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { Card, Title, AreaChart } from '@tremor/react';
 import { Tooltip } from 'react-tooltip';
 
-const dataFormatter = (number) => {
-  return "$ " + Intl.NumberFormat("us").format(number).toString();
-};
-
-function RewardsComponent() {
+const RewardsComponent = () => {
   const [rewardsData, setRewardsData] = useState(null);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState("");
   const [selectedYear, setSelectedYear] = useState("2022");
 
   useEffect(() => {
-    try {
-      fetch("./rewards.json")
-        .then((res) => res.json())
-        .then((jsonData) => setRewardsData(jsonData))
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    const fetchData = async () => {
+      try {
+        const response = await fetch("http://localhost:3000/issue_rewards"); // Replace with the correct API endpoint URL
+        if (response.ok) {
+          const jsonData = await response.json();
+          setRewardsData(jsonData);
+        } else {
+          console.error("Error:", response.status);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   const handleYearChange = (year) => {
     setSelectedYear(year);
   };
+
+  const dataFormatter = (number) => `$ ${Intl.NumberFormat("us").format(number)}`;
 
   return (
     <Card style={{ borderRadius: '16px' }}>
@@ -44,9 +45,7 @@ function RewardsComponent() {
           {rewardsData && Object.keys(rewardsData).map((year) => (
             <button
               key={year}
-              className={`px-2 py-1 rounded ${
-                selectedYear === year ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-              }`}
+              className={`px-2 py-1 rounded ${selectedYear === year ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"}`}
               onClick={() => handleYearChange(year)}
             >
               {year}
@@ -65,6 +64,6 @@ function RewardsComponent() {
       />
     </Card>
   );
-}
+};
 
 export default RewardsComponent;

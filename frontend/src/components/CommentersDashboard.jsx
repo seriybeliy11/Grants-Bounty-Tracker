@@ -3,30 +3,26 @@ import { Card, Title, BarChart } from '@tremor/react';
 import { Tooltip } from 'react-tooltip';
 
 function CommentersComponent() {
-  const [ContributorsData, setContribData] = useState(null);
-  const [showTooltip, setShowTooltip] = useState(false);
+  const [contributorsData, setContribData] = useState(null);
   const [selectedYear, setSelectedYear] = useState("2022");
 
   useEffect(() => {
-    try {
-      fetch("./commentators.json")
-        .then((res) => res.json())
-        .then((jsonData) => setContribData(jsonData))
-        .catch((error) => {
-          console.error("Error:", error);
-        });
-    } catch (error) {
-      console.error("Error:", error);
-    }
+    const fetchData = async () => {
+      try {
+        // Замените URL на ваш API сервер
+        const response = await fetch("http://localhost:3000/issue_comments");
+        if (!response.ok) {
+          throw new Error('Failed to fetch data');
+        }
+        const jsonData = await response.json();
+        setContribData(jsonData);
+      } catch (error) {
+        console.error("Error:", error);
+      }
+    };
+
+    fetchData();
   }, []);
-
-  const handleMouseEnter = () => {
-    setShowTooltip(true);
-  };
-
-  const handleMouseLeave = () => {
-    setShowTooltip(false);
-  };
 
   const handleYearChange = (year) => {
     setSelectedYear(year);
@@ -34,7 +30,7 @@ function CommentersComponent() {
 
   return (
     <div>
-      {ContributorsData && (
+      {contributorsData && (
         <Card style={{ borderRadius: '16px' }}>
           <div className="flex justify-between items-center">
             <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -45,7 +41,7 @@ function CommentersComponent() {
               </Tooltip>
             </div>
             <div className="space-x-2">
-              {ContributorsData && Object.keys(ContributorsData).map((year) => (
+              {Object.keys(contributorsData).map((year) => (
                 <button
                   key={year}
                   className={`px-2 py-1 rounded ${
@@ -60,7 +56,7 @@ function CommentersComponent() {
           </div>
           <BarChart
             className="h-72 mt-4"
-            data={ContributorsData ? ContributorsData[selectedYear] : []}
+            data={contributorsData[selectedYear]}
             index="issue"
             categories={["Comments"]}
             colors={["sky"]}
@@ -68,7 +64,6 @@ function CommentersComponent() {
         </Card>
       )}
     </div>
-
   );
 }
 

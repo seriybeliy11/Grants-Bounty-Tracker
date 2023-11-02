@@ -4,31 +4,31 @@ import { Tooltip } from 'react-tooltip';
 
 const ChartStates = () => {
   const [chartData, setChartData] = useState([]);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState('');
-  const [currentYear, setCurrentYear] = useState('2023'); // Измените текущий год по умолчанию, если необходимо
-  const availableYears = ['2022', '2023']; // Укажите доступные годы
+  const [currentYear, setCurrentYear] = useState('2023'); // Set the default year as needed
+  const availableYears = ['2022', '2023']; // Specify the available years
 
   useEffect(() => {
-    fetch('github_issues.json')
-      .then((response) => response.json())
-      .then((data) => {
-        if (data[currentYear]) {
-          const formattedData = data[currentYear].map((item) => ({
+    async function fetchData() {
+      try {
+        const response = await fetch('http://localhost:3000/issue_type'); // Replace with your API URL
+        if (!response.ok) {
+          throw new Error('Error');
+        }
+        const jsonData = await response.json();
+        if (jsonData[currentYear]) {
+          const formattedData = jsonData[currentYear].map((item) => ({
             que: item.value,
             state: item.state,
           }));
           setChartData(formattedData);
         }
-      })
-      .catch((error) => {
+      } catch (error) {
         console.error('Error:', error);
-      });
-  }, [currentYear]); // Обновление данных при изменении текущего года
+      }
+    }
 
-  const handleYearChange = (year) => {
-    setCurrentYear(year);
-  };
+    fetchData();
+  }, [currentYear]); // Update data when the current year changes
 
   return (
     <Card style={{ borderRadius: '16px' }}>
@@ -44,10 +44,8 @@ const ChartStates = () => {
           {availableYears.map((year) => (
             <button
               key={year}
-              className={`px-2 py-1 rounded ${
-                currentYear === year ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"
-              }`}
-              onClick={() => handleYearChange(year)}
+              className={`px-2 py-1 rounded ${currentYear === year ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700"}`}
+              onClick={() => setCurrentYear(year)}
             >
               {year}
             </button>
@@ -56,7 +54,6 @@ const ChartStates = () => {
       </div>
       <DonutChart data={chartData} category="que" index="state" />
     </Card>
-
   );
 };
 

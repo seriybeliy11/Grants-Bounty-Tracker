@@ -4,18 +4,17 @@ import { Tooltip } from 'react-tooltip';
 
 function IssuesAllComponent() {
   const [allIssuesData, setAllIssuesData] = useState(null);
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipText, setTooltipText] = useState('');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("./github_all_issues.json");
+        const response = await fetch("http://localhost:3000/count_issues"); // Replace with the correct API endpoint
         if (!response.ok) {
           throw new Error('Error');
         }
         const jsonData = await response.json();
-        setAllIssuesData(jsonData);
+        const parsedValueData = jsonData.result;
+        setAllIssuesData(parsedValueData);
       } catch (error) {
         console.error("Error:", error);
       }
@@ -25,15 +24,15 @@ function IssuesAllComponent() {
   }, []);
 
   return (
-    <div>
+    <Card style={{ borderRadius: '16px' }}>
       {allIssuesData && (
-        <Card style={{borderRadius: '16px'}}>
+        <div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Title style={{fontFamily: 'Manrope-900'}}>All Issues Timeline</Title>
+            <Title style={{ fontFamily: 'Manrope-900' }}>All Issues Timeline</Title>
             <a data-tooltip-id="my-anchor-element_states">💎</a>
-              <Tooltip id="my-anchor-element_states">
-                  <p>A line graph shows the number of all existing tasks at a given point in time</p>
-              </Tooltip>
+            <Tooltip id="my-anchor-element_states">
+              <p>A line graph shows the number of all existing tasks at a given point in time</p>
+            </Tooltip>
           </div>
           <AreaChart
             className="mt-6"
@@ -44,9 +43,9 @@ function IssuesAllComponent() {
             curveType="monotone"
             yAxisWidth={48}
           />
-        </Card>
+        </div>
       )}
-    </div>
+    </Card>
   );
 }
 

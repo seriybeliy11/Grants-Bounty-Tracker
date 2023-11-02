@@ -1,23 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const ThemeButton = () => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkTheme((prevTheme) => !prevTheme);
+  };
 
+  useEffect(() => {
     const rootElement = document.getElementById('root');
+    const appContainer = document.querySelector('.app-container');
+    const header = document.querySelector('.header');
 
     if (isDarkTheme) {
-      rootElement.classList.remove('dark');
-      document.querySelector('.app-container').style.backgroundColor = '#f4f4f5';
-      document.querySelector('.header').style.backgroundColor = '#ffffff';
-    } else {
       rootElement.classList.add('dark');
-      document.querySelector('.app-container').style.backgroundColor = '#1c1c1e';
-      document.querySelector('.header').style.backgroundColor = '#2c2c2e';
+      appContainer.style.backgroundColor = '#1c1c1e';
+      header.style.backgroundColor = '#2c2c2e';
+    } else {
+      rootElement.classList.remove('dark');
+      appContainer.style.backgroundColor = '#f4f4f5';
+      header.style.backgroundColor = '#ffffff';
     }
-  };
+  }, [isDarkTheme]);
 
   return (
     <button
@@ -55,7 +59,6 @@ const ThemeButton = () => {
         )}
       </svg>
     </button>
-
   );
 };
 

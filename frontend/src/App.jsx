@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
 import './App.css';
-import RewardsComponent from './LinePlotRewardsComponent.jsx';
+import RewardsComponent from './components/RewardDashboard.jsx';
 import ContributorsComponent from './components/ContributorsDashboard';
-import IssuesAllComponent from './IssuesAllComponent';
-import JustClosedIssuesComponent from './GihubClosedApprovedComponent';
-import ApprovedIssuesComponent from './GithubApprovedComponent';
-import AgentQueCard from './MainPanelComponent';
+import IssuesAllComponent from './components/AllIssuesTimeline';
+import JustClosedIssuesComponent from './components/ClosedIssuesTimeline';
+import ApprovedIssuesComponent from './components/ClosedApprovedIssuesTimeline';
+import AgentQueCard from './components/GitHubContributorCountCard';
 import BestAgentCard from './components/BestAgentCard';
-import IssuesQueCard from './IssuesQueCardComponent';
-import ThreatenedSpeciesQueChart from './IssuesSeasonComponent';
-import CommentersComponent from './CommentersComponent';
-import ThemeButton from './ThmButton';
-import ChartStates from './StatesComponent';
-import ChartsLabels from './LabelsComponent';
+import IssuesQueCard from './components/IssueCountCard';
+import ThreatenedSpeciesQueChart from './components/TaskDurationBarChart';
+import CommentersComponent from './components/CommentersDashboard';
+import ThemeButton from './components/ThemeToggleButton';
+import ChartStates from './components/StatesDonutChartCard';
+import ChartsLabels from './components/LabelStatsChart';
 import { Title } from "@tremor/react";
 
 
@@ -115,7 +115,7 @@ function App() {
         <hr className="border-b-1 border-black"></hr>
         <div className="flex justify-between items-center mt-4">
           <div className="left-column">
-            <img src="108139178.png" alt="Logo" className="w-6 h-6" />
+            <img src="images/logo.png" alt="Logo" className="w-6 h-6" />
           </div>
           <div className="dark:text-white flex items-center h-full">
             <p style={{ fontFamily: 'Manrope-700' }}>TON Society. All rights reserved.</p>

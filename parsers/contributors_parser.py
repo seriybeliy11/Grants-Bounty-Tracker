@@ -12,6 +12,13 @@ async def get_data_from_redis(redis_client, key):
         return ujson.loads(data)
     return None
 
+async def get_contributors(url, headers, page):
+    async with aiohttp.ClientSession() as session:
+        params = {"page": page, "per_page": 100}  # Adjust per_page as needed
+        async with session.get(url, headers=headers, params=params) as response:
+            response.raise_for_status()
+            return await response.json()
+
 async def main(GITHUB_TOKEN):
     headers = {
         "Authorization": f"Bearer {GITHUB_TOKEN}",
@@ -24,18 +31,22 @@ async def main(GITHUB_TOKEN):
     contributors_data = await get_data_from_redis(redis_conn, 'github_contributors')
 
     if not contributors_data:
-        async with aiohttp.ClientSession() as session:
-            async with session.get(url, headers=headers) as response:
-                response.raise_for_status()
-                contributors_data = await response.json()
-                contributors_list = [
-                    {
-                        "login": contributor["login"],
-                        "contributions": float(contributor["contributions"])
-                    }
-                    for contributor in contributors_data
-                ]
-                await save_data_to_redis(redis_conn, 'github_contributors', contributors_list, 4 * 3600)
+        contributors_data = []
+        page = 1
+        while True:
+            contributors = await get_contributors(url, headers, page)
+            if not contributors:
+                break
+            contributors_data.extend([
+                {
+                    "login": contributor["login"],
+                    "contributions": float(contributor["contributions"])
+                }
+                for contributor in contributors
+            ])
+            page += 1
+        print(len(contributors_data))
+        await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 4 * 3600)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

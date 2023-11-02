@@ -1,29 +1,23 @@
-import requests
+import aiohttp
 import asyncio
-import nats
-import redis
-import json
-
+import ujson
+from redis import asyncio as aioredis
+from collections import OrderedDict
 
 async def get_issues(session, url, params, page, headers):
     params["page"] = page
-    response = session.get(url, params=params, headers=headers)
-    response.raise_for_status()
-    return response.json()
+    async with session.get(url, params=params, headers=headers) as response:
+        response.raise_for_status()
+        return await response.json(loads=ujson.loads)
 
-def save_data_to_redis(redis_client, key, data, expiration):
-    redis_client.setex(key, expiration, json.dumps(data))
+async def save_data_to_redis(redis_client, key, data, expiration):
+    await redis_client.setex(key, expiration, ujson.dumps(data))
 
-def get_data_from_redis(redis_client, key):
-    data = redis_client.get(key)
+async def get_data_from_redis(redis_client, key):
+    data = await redis_client.get(key)
     if data:
-        return json.loads(data)
+        return ujson.loads(data)
     return None
-
-async def send_data_to_nats(topic, data):
-    nc = await nats.connect("nats")
-    await nc.publish(topic, json.dumps(data).encode())
-    await nc.close()
 
 async def main(GITHUB_TOKEN):
     HEADERS = {
@@ -36,16 +30,14 @@ async def main(GITHUB_TOKEN):
         "state": "all"
     }
 
-    redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
+    redis_client = await aioredis.from_url("redis://redis")
 
-    saved_data = get_data_from_redis(redis_client, "issue_type")
+    saved_data = await get_data_from_redis(redis_client, "issue_type")
 
-    if saved_data:
-        result = saved_data
-    else:
-        issue_counts = {}  # Теперь используем словарь для хранения информации о количестве по годам
+    if not saved_data:
+        issue_counts = OrderedDict()
 
-        with requests.Session() as session:
+        async with aiohttp.ClientSession() as session:
             page = 1
             while True:
                 issues = await get_issues(session, url, params, page, HEADERS)
@@ -54,21 +46,20 @@ async def main(GITHUB_TOKEN):
 
                 for issue in issues:
                     state = issue["state"]
-                    created_at = issue["created_at"][:4]  # Получаем год из даты создания
+                    created_at = issue["created_at"][:4]
                     if created_at not in issue_counts:
                         issue_counts[created_at] = {"open": 0, "closed": 0}
                     issue_counts[created_at][state] += 1
 
                 page += 1
 
-            result = {
-                year: [{"state": state, "value": count} for state, count in issue_counts[year].items()]
-                for year in issue_counts
-            }        
-            save_data_to_redis(redis_client, "issue_type", result, 14400)
+        result = {
+            year: [{"state": state, "value": count} for state, count in sorted(issue_counts[year].items())]
+            for year in sorted(issue_counts)
+        }
 
-    await send_data_to_nats("issue_type", result)
+        await save_data_to_redis(redis_client, "issue_type", result, 14400)
 
 if __name__ == '__main__':
-    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"
     asyncio.run(main(GITHUB_TOKEN))

@@ -1,17 +1,5 @@
 version: '3'
 services:
-  parsers:
-    build:
-      context: ./parsers
-    environment:
-      - GITHUB_TOKEN=YOUR_GITHUB_TOKEN
-    volumes:
-      - ./parsers:/app
-    depends_on:
-      - redis
-    networks:
-      - mynetwork
-
   redis:
     image: redis:latest
     ports:
@@ -19,11 +7,26 @@ services:
     networks:
       - mynetwork
 
-  nats:
-    image: nats:latest
+  parsers:
+    build:
+      context: ./parsers
+    environment:
+      - GITHUB_TOKEN=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
+    volumes:
+      - ./parsers:/app
+    depends_on:
+      - redis
+    networks:
+      - mynetwork
+
+  frontend:
+    build:
+      context: ./frontend_new
     ports:
-      - "4222:4222"
-    command: ["-js"]
+      - "5173:5173"
+      - "3000:3000"
+    depends_on:
+      - parsers
     networks:
       - mynetwork
 

@@ -1,4 +1,4 @@
-FROM python:latest
+FROM python:3.11.6
 
 COPY requirements.txt /app/
 RUN pip install --no-cache-dir -r /app/requirements.txt

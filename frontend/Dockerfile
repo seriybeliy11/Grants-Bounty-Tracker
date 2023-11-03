@@ -11,12 +11,9 @@ RUN npm install
 
 COPY public/ public/
 COPY src/ src/
-
 COPY start.sh ./
 
-ENV PORT 3000
-
-EXPOSE $PORT
+EXPOSE 3000
 EXPOSE 5173
 
 RUN chmod +x start.sh

@@ -4,17 +4,18 @@ import { Tooltip } from 'react-tooltip';
 
 const ChartStates = () => {
   const [chartData, setChartData] = useState([]);
-  const [currentYear, setCurrentYear] = useState('2023'); // Set the default year as needed
-  const availableYears = ['2022', '2023']; // Specify the available years
+  const [currentYear, setCurrentYear] = useState('2023');
+  const availableYears = ['2022', '2023'];
 
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('http://localhost:3000/issue_type'); // Replace with your API URL
+        const response = await fetch('http://localhost:3000/issue_type');
         if (!response.ok) {
           throw new Error('Error');
         }
-        const jsonData = await response.json();
+        const data = await response.json();
+        const jsonData = data.result;
         if (jsonData[currentYear]) {
           const formattedData = jsonData[currentYear].map((item) => ({
             que: item.value,
@@ -28,7 +29,7 @@ const ChartStates = () => {
     }
 
     fetchData();
-  }, [currentYear]); // Update data when the current year changes
+  }, [currentYear]);
 
   return (
     <Card style={{ borderRadius: '16px' }}>

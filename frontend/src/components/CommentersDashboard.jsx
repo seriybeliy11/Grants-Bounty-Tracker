@@ -9,12 +9,12 @@ function CommentersComponent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Замените URL на ваш API сервер
         const response = await fetch("http://localhost:3000/issue_comments");
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }
-        const jsonData = await response.json();
+        const data = await response.json();
+        const jsonData = data.result;
         setContribData(jsonData);
       } catch (error) {
         console.error("Error:", error);

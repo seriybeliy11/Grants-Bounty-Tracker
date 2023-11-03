@@ -8,12 +8,13 @@ const JustClosedIssuesComponent = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/closed_issues"); // Replace with the correct API endpoint
+        const response = await fetch("http://localhost:3000/closed_issues");
         if (!response.ok) {
           throw new Error('Error');
         }
         const data = await response.json();
         const jsonData = data.result;
+        console.log(jsonData);
         setJustClosedIssuesData(jsonData);
       } catch (error) {
         console.error("Error:", error);
@@ -37,8 +38,8 @@ const JustClosedIssuesComponent = () => {
           <AreaChart
             className="h-72 mt-4"
             data={justClosedIssuesData}
-            index="Dates"
-            categories={["Closed Issues"]}
+            index="Date"
+            categories={["ClosedIssues"]}
             colors={["sky"]}
             curveType="monotone"
           />

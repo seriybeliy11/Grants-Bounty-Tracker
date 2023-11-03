@@ -8,7 +8,7 @@ const IssuesQueCard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/issue_type"); // Замените на правильный URL для вашего сервера
+        const response = await fetch("http://localhost:3000/issue_type");
         if (!response.ok) {
           throw new Error('Error');
         }
@@ -45,7 +45,7 @@ const IssuesQueCard = () => {
         </Tooltip>
       </div>
       <Metric style={{ fontSize: '27px', fontFamily: 'Manrope-900' }}>
-        {totalIssuesValue}
+        {totalIssuesValue !== null ? totalIssuesValue : "Loading..."}
       </Metric>
     </Card>
   );

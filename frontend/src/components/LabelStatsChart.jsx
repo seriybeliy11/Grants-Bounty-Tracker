@@ -13,7 +13,7 @@ const ChartsLabels = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch('http://localhost:3000/labels_stats'); // Update the URL as needed
+        const response = await fetch('http://localhost:3000/labels_stats');
         if (!response.ok) {
           throw new Error('Error');
         }

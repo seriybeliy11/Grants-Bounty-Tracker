@@ -9,7 +9,7 @@ const RewardsComponent = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/issue_rewards"); // Replace with the correct API endpoint URL
+        const response = await fetch("http://localhost:3000/issue_rewards");
         if (response.ok) {
           const data = await response.json();
           const jsonData = data.result;

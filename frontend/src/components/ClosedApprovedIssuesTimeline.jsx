@@ -8,11 +8,13 @@ function ApprovedIssuesComponent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/approved_issues"); // Replace with the correct API endpoint
+        const response = await fetch("http://localhost:3000/approved_issues");
         if (!response.ok) {
           throw new Error('Error');
         }
-        const jsonData = await response.json();
+        const data = await response.json();
+        const jsonData = data.result;
+        console.log(jsonData);
         setApprovedIssuesData(jsonData);
       } catch (error) {
         console.error("Error:", error);
@@ -40,8 +42,8 @@ function ApprovedIssuesComponent() {
             <AreaChart
               className="h-72 mt-4"
               data={approvedIssuesData}
-              index="Dates"
-              categories={["Closed Approved Issues"]}
+              index="Date"
+              categories={["ClosedApprovedIssues"]}
               colors={["sky"]}
               curveType="monotone"
             />

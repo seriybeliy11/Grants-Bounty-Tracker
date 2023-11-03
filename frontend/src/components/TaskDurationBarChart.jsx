@@ -8,15 +8,14 @@ const ThreatenedSpeciesQueChart = () => {
   const [apiData, setApiData] = useState(null);
 
   useEffect(() => {
-    // Fetch data from the API
     async function fetchDataFromAPI() {
       try {
-        const response = await fetch("http://localhost:3000/issue_stats"); // Replace with your API URL
+        const response = await fetch("http://localhost:3000/issue_stats");
         if (!response.ok) {
           throw new Error('Error');
         }
-        const jsonData = await response.json();
-        // Assuming your API response structure matches the expected chartData format
+        const data = await response.json();
+        const jsonData = data.result;
         setApiData(jsonData);
       } catch (error) {
         console.error("Error:", error);
@@ -63,7 +62,7 @@ const ThreatenedSpeciesQueChart = () => {
       {apiData ? (
         <BarChart
           className="mt-6"
-          data={apiData} // Use the API data here
+          data={apiData[selectedYear]}
           index="number"
           categories={["duration"]}
           colors={["sky"]}

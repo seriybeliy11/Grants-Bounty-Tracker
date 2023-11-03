@@ -7,11 +7,12 @@ function ContributorsComponent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/github_contributors"); // Replace with the correct API endpoint
+        const response = await fetch("http://localhost:3000/github_contributors");
         if (!response.ok) {
           throw new Error('Error');
         }
-        const jsonData = await response.json();
+        const data = await response.json();
+        const jsonData = data.result;
         setContributorsData(jsonData);
       } catch (error) {
         console.error("Error:", error);

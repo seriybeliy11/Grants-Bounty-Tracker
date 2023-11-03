@@ -4,7 +4,7 @@
 
 ## Project Description
 
-The "Grants & Bounties Tracker" project is developed using React, Vite, and other technologies to display various real-time metrics and charts. The system provides essential data about the activities within the TON Society organization and can operate in both light and dark modes.
+The Grants & Bounties Tracker is developed using React, Vite, and other technologies to display various real-time metrics and charts. The system provides essential data about the activities within the TON Society organization and can operate in both light and dark modes.
 
 ## Repository Structure
 

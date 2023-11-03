@@ -8,13 +8,12 @@ const BestAgentCard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/github_contributors"); // Replace with the correct API endpoint
+        const response = await fetch("http://localhost:3000/github_contributors");
         if (!response.ok) {
           throw new Error('Error');
         }
         const data = await response.json();
         const jsonData = data.result;
-        console.log(jsonData);
 
         let maxContributions = -Infinity;
         let maxLogin = null;
@@ -47,7 +46,7 @@ const BestAgentCard = () => {
             </Tooltip>
       </div>
       <Metric style={{ fontSize: '27px', fontFamily: 'Manrope-900' }}>
-        {maxContributorLogin}
+        {maxContributorLogin !== null ? maxContributorLogin : "Loading..."}
       </Metric>
     </Card>
   );

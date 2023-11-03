@@ -67,7 +67,7 @@ async def main(GITHUB_TOKEN):
 
         sorted_years = sorted(issues_by_year.keys())
 
-        result = [{"Date": year, "ClosedApprovedIssues": str(issues_by_year[year]["ClosedApprovedIssues"])} for year in sorted_years]
+        result = [{"Date": year, "ClosedApprovedIssues": issues_by_year[year]["ClosedApprovedIssues"]} for year in sorted_years]
         
         await save_data_to_redis(redis_client, 'approved_issues', result, 4 * 60 * 60)
 

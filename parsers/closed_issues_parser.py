@@ -51,7 +51,7 @@ async def main(GITHUB_TOKEN):
 
     sorted_years = sorted(closed_issues_by_year.keys())
 
-    result = [{"Dates": year, "Closed Issues": closed_issues_by_year[year]} for year in sorted_years]
+    result = [{"Date": year, "ClosedIssues": closed_issues_by_year[year]} for year in sorted_years]
 
     redis_data = await get_data_from_redis(redis, "closed_issues")
 

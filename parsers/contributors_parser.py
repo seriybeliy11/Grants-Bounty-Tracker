@@ -45,7 +45,6 @@ async def main(GITHUB_TOKEN):
                 for contributor in contributors
             ])
             page += 1
-        print(len(contributors_data))
         await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 4 * 3600)
 
 if __name__ == '__main__':

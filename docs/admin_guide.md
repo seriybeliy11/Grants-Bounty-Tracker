@@ -1,6 +1,6 @@
 ## Administrator's Guide
 
-Welcome to the administrator's guide for the Grants & Bounties Tracker. In this guide, you will find detailed instructions on how to install, configure, and manage the project. The project is a web application that includes a frontend, an API server, GitHub data parsers, and a Redis database.
+Welcome to the administrator's guide for the "Grants & Bounties Tracker". In this guide, you will find detailed instructions on how to install, configure, and manage the project. The project is a web application that includes a frontend, an API server, GitHub data parsers, and a Redis database.
 
 ### Table of Contents:
 1. [Installation and Project Setup](#1-installation-and-project-setup)
@@ -88,4 +88,4 @@ To shut down the project, follow these steps:
 
 2. The project will be completely stopped, and containers will be removed.
 
-This concludes the administrator's guide for the "Grant's & Bounties Tracker" project. You can start using the application by visiting `http://localhost:5173`. If you have any questions or issues, refer to the documentation in the `docs` folder or contact the project developers.
+This concludes the administrator's guide for the "Grants & Bounties Tracker" project. You can start using the application by visiting `http://localhost:5173`. If you have any questions or issues, refer to the documentation in the `docs` folder or contact the project developers.

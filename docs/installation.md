@@ -1,6 +1,6 @@
 # Installation and Project Setup Guide
 
-This guide provides a step-by-step instruction on how to install and run the Grants & Bounties Tracker on your local computer. The project includes a frontend, an API server, and data parsers that work with GitHub and Redis.
+This guide provides a step-by-step instruction on how to install and run the "Grants & Bounties Tracker" on your local computer. The project includes a frontend, an API server, and data parsers that work with GitHub and Redis.
 
 ## Requirements
 
@@ -64,4 +64,4 @@ The API server is available on port 3000 of your local host. You can interact wi
 - Before using the project, make sure your GitHub token has access to the necessary data.
 - When finished with the project, don't forget to shut it down to free up resources.
 
-This concludes the installation and setup of the Grant's & Bounties Tracker. You can use it to track and visualize GitHub contributors' metrics and other data.
+This concludes the installation and setup of the "Grants & Bounties Tracker". You can use it to track and visualize GitHub contributors' metrics and other data.

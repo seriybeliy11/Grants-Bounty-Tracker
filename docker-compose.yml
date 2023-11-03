@@ -1,6 +1,7 @@
 version: '3'
 services:
   redis:
+    container_name: redis
     image: redis:latest
     ports:
       - "6379:6379"
@@ -8,6 +9,7 @@ services:
       - mynetwork
 
   parsers:
+    container_name: parsers
     build:
       context: ./parsers
     env_file:
@@ -20,6 +22,7 @@ services:
       - mynetwork
 
   frontend:
+    container_name: frontend
     build:
       context: ./frontend
     ports:

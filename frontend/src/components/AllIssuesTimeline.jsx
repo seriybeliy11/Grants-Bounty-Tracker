@@ -8,7 +8,7 @@ function IssuesAllComponent() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/count_issues"); // Replace with the correct API endpoint
+        const response = await fetch("http://localhost:3000/count_issues");
         if (!response.ok) {
           throw new Error('Error');
         }

@@ -6,7 +6,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 const redisClient = createClient({
-  url: 'redis://localhost:6379'
+  url: 'redis://redis:6379'
 });
 
 redisClient.on('error', (err) => {
@@ -26,7 +26,6 @@ app.use(cors());
 app.get('/github_contributors', async (req, res) => {
   const value = await redisClient.get('github_contributors');
   const parsedValue = JSON.parse(value);
-  console.log(parsedValue);
   res.json({ result: parsedValue });
 });
 

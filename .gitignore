@@ -22,5 +22,5 @@ npm-debug.log
 yarn-error.log
 
 # Ignore .pyc cache and venv directories
-__pycache__/
+**/__pycache__/
 venv/

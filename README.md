@@ -1,85 +1,85 @@
-# Проект "Grant's & Bounties Tracker"
+# Project "Grant's & Bounties Tracker"
 
 ![TON Society Logo](./frontend/public/images/logo_README.jpg)
 
-## Описание проекта
+## Project Description
 
-Проект "Grant's & Bounties Tracker" разработан с использованием React, Vite и других технологий для отображения различных метрик и диаграмм в реальном времени. Система предоставляет важные данные о деятельности в организации TON Society и может работать в светлом и темном режиме.
+The "Grant's & Bounties Tracker" project is developed using React, Vite, and other technologies to display various real-time metrics and charts. The system provides essential data about the activities within the TON Society organization and can operate in both light and dark modes.
 
-## Структура репозитория
+## Repository Structure
 
-Проект имеет следующую структуру репозитория:
+The project has the following repository structure:
 
-- `docs/`: Каталог с документацией, включая `admin_guide.md`, `installation.md`, и `user_guide.md`.
+- `docs/`: Directory containing documentation, including `admin_guide.md`, `installation.md`, and `user_guide.md`.
 
-- `frontend/`: Каталог с исходным кодом фронтенда. Внутри него находятся компоненты, изображения, и другие ресурсы.
+- `frontend/`: Directory with the frontend source code, including components, images, and other resources.
 
-- `parsers/`: Каталог с парсерами для сбора данных с GitHub.
+- `parsers/`: Directory with parsers for collecting data from GitHub.
 
-- `kubernetes/`: Каталог с файлами конфигурации Kubernetes для развертывания системы.
+- `kubernetes/`: Directory with Kubernetes configuration files for deploying the system.
 
-- `docker-compose.yml`: Файл Docker Compose для управления контейнерами проекта.
+- `docker-compose.yml`: Docker Compose file for managing project containers.
 
-## Основные компоненты
+## Key Components
 
-### Фронтенд
+### Frontend
 
-- Исходный код фронтенда находится в каталоге `frontend/src/`.
+- The frontend source code is located in the `frontend/src/` directory.
 
-- Отображает различные метрики и диаграммы, включая информацию о контрибьюторах, задачах и наградах.
+- Displays various metrics and charts, including information about contributors, tasks, and rewards.
 
-- Поддерживает светлую и темную темы, которые можно переключать.
+- Supports light and dark themes that can be switched.
 
-### Парсеры
+### Parsers
 
-- Парсеры для сбора данных с GitHub находятся в каталоге `parsers/`.
+- Parsers for collecting data from GitHub are found in the `parsers/` directory.
 
-- Каждый парсер выполняется асинхронно и может работать в многопоточном режиме.
+- Each parser runs asynchronously and can work in multi-threaded mode.
 
-- Данные, полученные парсерами, сохраняются в Redis для дальнейшего доступа.
+- Data obtained by the parsers is stored in Redis for further access.
 
-### API-сервер
+### API Server
 
-- API-сервер находится в каталоге `frontend/server.js`.
+- The API server is located in the `frontend/server.js` directory.
 
-- Взаимодействует с Redis для предоставления данных фронтенду через различные маршруты.
+- Interacts with Redis to provide data to the frontend through various routes.
 
-## Запуск проекта
+## Running the Project
 
-Для запуска проекта выполните следующие шаги:
+To run the project, follow these steps:
 
-1. Убедитесь, что у вас установлен Docker и Docker Compose.
+1. Ensure you have Docker and Docker Compose installed.
 
-2. Запустите контейнеры с помощью команды:
+2. Start the containers with the following command:
 
    ```bash
    docker-compose up
    ```
 
-   Это запустит Redis, фронтенд и контейнер с парсерами.
+   This will launch Redis, the frontend, and the parser container.
 
-3. По завершении работы парсеров, фронтенд будет доступен по адресу [http://localhost:5173](http://localhost:5173).
+3. Once the parsers have completed their work, the frontend will be accessible at [http://localhost:5173](http://localhost:5173).
 
-## Документация
+## Documentation
 
-Дополнительные инструкции и руководства доступны в каталоге `docs/`:
+Additional instructions and guides are available in the `docs/` directory:
 
-- [Руководство для администраторов](docs/admin_guide.md)
-- [Инструкция по установке](docs/installation.md)
-- [Руководство для пользователей](docs/user_guide.md)
+- [Administrator's Guide](docs/admin_guide.md)
+- [Installation Guide](docs/installation.md)
+- [User Guide](docs/user_guide.md)
 
-## Контакты
+## Contact Information
 
-Авторы проекта:
+Project Authors:
 
 - delovoyhomie
 - seriybeliy11
 
-Свяжитесь с нами:
+Reach out to us:
 
 - Telegram: @acaedb
 - Telegram: @delovoyhomie
 
-## Лицензия
+## License
 
-Проект распространяется под лицензией TON Society. Все права защищены.
+This project is distributed under the TON Society license. All rights reserved.

@@ -10,6 +10,7 @@ import issue_rewards_parser
 import issue_stats_parser
 import issue_type_parser
 import labels_stats_parser
+import redis
 
 logging.basicConfig(
     level=logging.INFO,
@@ -20,6 +21,10 @@ GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 if GITHUB_TOKEN == "YOUR_GITHUB_TOKEN":
     raise ValueError("Environment variable GITHUB_TOKEN is not set.")
+
+redis_client = redis.StrictRedis(host='redis', port=6379, db=0)
+
+redis_client.set('parsers_completed', 'incomplete')
 
 async def run_parsers():
     parsers = [
@@ -46,6 +51,8 @@ async def run_parsers():
             logger.info(f"Finished {parser.__name__} ({completed_parsers}/{total_parsers})")
         except Exception as e:
             logger.error(f"Error in {parser.__name__}: {str(e)}")
+
+    redis_client.set('parsers_completed', 'completed')
 
 if __name__ == '__main__':
     asyncio.run(run_parsers())

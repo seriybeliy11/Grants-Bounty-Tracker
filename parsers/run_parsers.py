@@ -16,13 +16,10 @@ logging.basicConfig(
     format="%(asctime)s - %(name)s - %(levelname)s - %(message)s",
 )
 
-def get_github_token():
-    GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
-    if GITHUB_TOKEN is None:
-        raise ValueError("Environment variable GITHUB_TOKEN is not set.")
-    
-    return GITHUB_TOKEN
+if GITHUB_TOKEN == "YOUR_GITHUB_TOKEN":
+    raise ValueError("Environment variable GITHUB_TOKEN is not set.")
 
 async def run_parsers():
     parsers = [
@@ -44,7 +41,7 @@ async def run_parsers():
         logger = logging.getLogger(parser.__name__)
         try:
             logger.info(f"Starting {parser.__name__} ({completed_parsers}/{total_parsers})")
-            await parser.main(get_github_token())
+            await parser.main(GITHUB_TOKEN)
             completed_parsers += 1
             logger.info(f"Finished {parser.__name__} ({completed_parsers}/{total_parsers})")
         except Exception as e:

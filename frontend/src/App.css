@@ -5,28 +5,28 @@
 
 @font-face {
   font-family: 'Manrope-600';
-  src: url('/Manrope-Light.ttf') format('truetype');
+  src: url('fonts/Manrope-Light.ttf') format('truetype');
   font-weight: 600;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope-500';
-  src: url('/Manrope-ExtraLight.ttf') format('truetype');
+  src: url('fonts/Manrope-ExtraLight.ttf') format('truetype');
   font-weight: 500;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope-700';
-  src: url('/Manrope-Bold.ttf') format('truetype');
+  src: url('fonts/Manrope-Bold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
 
 @font-face {
   font-family: 'Manrope-900';
-  src: url('/Manrope-ExtraBold.ttf') format('truetype');
+  src: url('fonts/Manrope-ExtraBold.ttf') format('truetype');
   font-weight: 700;
   font-style: normal;
 }
@@ -52,7 +52,7 @@
   border-bottom-left-radius: 32px;
   border-bottom-right-radius: 32px;
   display: flex;
-  background-image: url('Friom.svg');
+  background-image: url('images/Friom.svg');
   background-position: суcenter;
   background-repeat: no-repeat;
   transition: background-color 0.1s ease;

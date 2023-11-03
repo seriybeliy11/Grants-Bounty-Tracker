@@ -1,29 +1,23 @@
-import requests
+import aiohttp
 import asyncio
-import json
-import nats
-import redis
+import ujson
+from redis import asyncio as aioredis
+from collections import OrderedDict
 
-
-def get_issues(url, params, headers, page):
+async def get_issues(session, url, params, headers, page):
     params["page"] = page
-    response = requests.get(url, headers=headers, params=params)
-    response.raise_for_status()
-    return response.json()
+    async with session.get(url, headers=headers, params=params) as response:
+        response.raise_for_status()
+        return await response.json(loads=ujson.loads)
 
-def save_data_to_redis(redis_client, key, data, expiration):
-    redis_client.setex(key, expiration, json.dumps(data))
+async def save_data_to_redis(redis_client, key, data, expiration):
+    await redis_client.setex(key, expiration, ujson.dumps(data))
 
-def get_data_from_redis(redis_client, key):
-    data = redis_client.get(key)
+async def get_data_from_redis(redis_client, key):
+    data = await redis_client.get(key)
     if data:
-        return json.loads(data)
+        return ujson.loads(data)
     return None
-
-async def send_data_to_nats(topic, data):
-    nc = await nats.connect("nats")
-    await nc.publish(topic, data.encode())
-    await nc.close()
 
 async def main(GITHUB_TOKEN):
     HEADERS = {
@@ -36,44 +30,38 @@ async def main(GITHUB_TOKEN):
         "state": "all"
     }
 
-    redis_client = redis.StrictRedis(host='redis', port=6379, db=0, decode_responses=True)
+    redis_client = await aioredis.from_url("redis://redis")
 
-    cached_data = get_data_from_redis(redis_client, "labels_stats")
+    cached_data = await get_data_from_redis(redis_client, "labels_stats")
 
-    if cached_data:
-        labels_result = cached_data
-    else:
-        labels_by_year = {}
+    if not cached_data:
+        labels_by_year = OrderedDict()
 
         page = 1
-        while True:
-            issues = get_issues(url, params, HEADERS, page)
-            if not issues:
-                break
+        async with aiohttp.ClientSession() as session:
+            while True:
+                issues = await get_issues(session, url, params, HEADERS, page)
+                if not issues:
+                    break
 
-            for issue in issues:
-                labels = issue["labels"]
-                created_at = issue["created_at"][:4]  # Извлекаем год
-                if created_at not in labels_by_year:
-                    labels_by_year[created_at] = {}
-                for label in labels:
-                    label_name = label["name"]
-                    if label_name not in labels_by_year[created_at]:
-                        labels_by_year[created_at][label_name] = 1
-                    else:
-                        labels_by_year[created_at][label_name] += 1
+                for issue in issues:
+                    labels = issue["labels"]
+                    created_at = issue["created_at"][:4]  # Extract year
+                    if created_at not in labels_by_year:
+                        labels_by_year[created_at] = {}
+                    for label in labels:
+                        label_name = label["name"]
+                        labels_by_year[created_at][label_name] = labels_by_year[created_at].get(label_name, 0) + 1
 
-            page += 1
+                page += 1
 
-        labels_result = {
+        labels_result = OrderedDict({
             year: [{"label": label, "value": count} for label, count in labels_by_year[year].items()]
             for year in labels_by_year
-            }
+        })
 
-        save_data_to_redis(redis_client, "labels_stats", labels_result, 4 * 3600)
-
-    await send_data_to_nats("labels_stats", json.dumps(labels_result))
+        await save_data_to_redis(redis_client, "labels_stats", labels_result, 4 * 3600)
 
 if __name__ == '__main__':
-    GITHUB_TOKEN="YOUR_GITHUB_TOKEN"
+    GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"
     asyncio.run(main(GITHUB_TOKEN))

@@ -23,6 +23,15 @@ redisClient.connect((err) => {
 
 app.use(cors());
 
+app.get('/check_status', async (req, res) => {
+  const redisKey = req.query.redis_key;
+
+  const value = await redisClient.get('parsers_completed');
+  const status = value === "completed" ? "completed" : "incomplete";
+
+  res.json({ status });
+});
+
 app.get('/github_contributors', async (req, res) => {
   const value = await redisClient.get('github_contributors');
   const parsedValue = JSON.parse(value);

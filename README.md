@@ -77,8 +77,8 @@ Project Authors:
 
 Reach out to us:
 
-- Telegram: @acaedb
 - Telegram: @delovoyhomie
+- Telegram: @acaedb
 
 ## License
 

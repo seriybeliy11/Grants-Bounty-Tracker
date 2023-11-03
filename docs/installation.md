@@ -1,6 +1,6 @@
 # Installation and Project Setup Guide
 
-This guide provides a step-by-step instruction on how to install and run the Grant's & Bounties Tracker on your local computer. The project includes a frontend, an API server, and data parsers that work with GitHub and Redis.
+This guide provides a step-by-step instruction on how to install and run the Grants & Bounties Tracker on your local computer. The project includes a frontend, an API server, and data parsers that work with GitHub and Redis.
 
 ## Requirements
 

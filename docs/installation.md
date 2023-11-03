@@ -1,52 +1,52 @@
-# Руководство по установке и запуску проекта
+# Installation and Project Setup Guide
 
-Это руководство предоставляет пошаговую инструкцию по установке и запуску проекта "Grant's & Bounties Tracker" на вашем локальном компьютере. Проект включает в себя фронтенд, сервер API, и парсеры данных, работающие с GitHub и Redis.
+This guide provides a step-by-step instruction on how to install and run the "Grant's & Bounties Tracker" project on your local computer. The project includes a frontend, an API server, and data parsers that work with GitHub and Redis.
 
-## Требования
+## Requirements
 
-Перед началом установки убедитесь, что у вас установлены следующие компоненты:
+Before getting started, make sure you have the following components installed:
 
 - [Docker](https://www.docker.com/get-started)
 - [Docker Compose](https://docs.docker.com/compose/install/)
 
-## Установка проекта
+## Project Installation
 
-1. Склонируйте репозиторий проекта с GitHub:
+1. Clone the project repository from GitHub:
 
    ```bash
    git clone https://github.com/seriybeliy11/Grants-Bounty-Tracker.git
    cd Grants-Bounty-Tracker
    ```
 
-2. Создайте файл `.env` в корневой директории проекта и добавьте в него свой GITHUB токен (замените `YOUR_GITHUB_TOKEN` на свой токен):
+2. Create a `.env` file in the project's root directory and add your GitHub token to it (replace `YOUR_GITHUB_TOKEN` with your token):
 
    ```
    GITHUB_TOKEN=YOUR_GITHUB_TOKEN
    ```
 
-3. Перейдите в корневой каталог проекта и выполните следующую команду для запуска проекта с использованием Docker Compose:
+3. Navigate to the project's root directory and run the following command to start the project using Docker Compose:
 
    ```bash
    docker-compose up
    ```
 
-   Это запустит контейнеры с Redis, фронтендом и контейнером с парсерами. Парсеры будут начинать сбор данных с GitHub и сохранять их в Redis.
+   This will start containers for Redis, the frontend, and the data parser container. The parsers will begin gathering data from GitHub and storing it in Redis.
 
-4. После успешного запуска, фронтенд будет доступен по адресу [http://localhost:5173](http://localhost:5173).
+4. After a successful launch, the frontend will be accessible at [http://localhost:5173](http://localhost:5173).
 
-## Завершение работы
+## Shutdown
 
-Для завершения работы проекта выполните следующую команду в корневой директории проекта:
+To shut down the project, run the following command in the project's root directory:
 
 ```bash
 docker-compose down
 ```
 
-Это остановит контейнеры и освободит ресурсы.
+This will stop the containers and free up resources.
 
-## Использование API
+## Using the API
 
-API-сервер доступен на порту 3000 локального хоста. Вы можете взаимодействовать с ним, чтобы получить данные о GitHub контрибьюторах и другие метрики. Примеры доступных маршрутов:
+The API server is available on port 3000 of your local host. You can interact with it to retrieve data about GitHub contributors and other metrics. Here are examples of available routes:
 
 - [http://localhost:3000/github_contributors](http://localhost:3000/github_contributors)
 - [http://localhost:3000/issue_comments](http://localhost:3000/issue_comments)
@@ -58,10 +58,10 @@ API-сервер доступен на порту 3000 локального хо
 - [http://localhost:3000/issue_rewards](http://localhost:3000/issue_rewards)
 - [http://localhost:3000/count_issues](http://localhost:3000/count_issues)
 
-## Рекомендации
+## Recommendations
 
-- Убедитесь, что у вас достаточно ресурсов на компьютере для работы Docker-контейнеров.
-- Перед использованием проекта удостоверьтесь, что ваш GITHUB токен имеет доступ к необходимым данным.
-- По окончании работы с проектом не забудьте завершить его, чтобы освободить ресурсы.
+- Ensure your computer has sufficient resources to run Docker containers.
+- Before using the project, make sure your GitHub token has access to the necessary data.
+- When finished with the project, don't forget to shut it down to free up resources.
 
-Это завершает установку и запуск проекта "Grant's & Bounties Tracker". Вы можете использовать его для отслеживания и визуализации метрик GitHub контрибьюторов и других данных.
+This concludes the installation and setup of the "Grant's & Bounties Tracker" project. You can use it to track and visualize GitHub contributors' metrics and other data.

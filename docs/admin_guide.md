@@ -1,93 +1,91 @@
-## Руководство администратора
+## Administrator's Guide
 
-Добро пожаловать в руководство администратора для проекта "Grant's & Bounties Tracker". В этом руководстве вы найдете подробные инструкции по установке, настройке и управлению проектом. Проект представляет собой веб-приложение, включающее фронтенд, API-сервер, парсеры данных с GitHub и базу данных Redis.
+Welcome to the administrator's guide for the "Grant's & Bounties Tracker" project. In this guide, you will find detailed instructions on how to install, configure, and manage the project. The project is a web application that includes a frontend, an API server, GitHub data parsers, and a Redis database.
 
-### Содержание:
-1. [Установка и запуск проекта](#1-установка-и-запуск-проекта)
-2. [Настройка окружения](#2-настройка-окружения)
-3. [Управление парсерами](#3-управление-парсерами)
-4. [Обновление данных](#4-обновление-данных)
-5. [Завершение работы](#5-завершение-работы)
+### Table of Contents:
+1. [Installation and Project Setup](#1-installation-and-project-setup)
+2. [Environment Configuration](#2-environment-configuration)
+3. [Managing Parsers](#3-managing-parsers)
+4. [Data Updates](#4-data-updates)
+5. [Shutdown](#5-shutdown)
 
-### 1. Установка и запуск проекта
+### 1. Installation and Project Setup
 
-Для успешного развертывания проекта выполните следующие шаги:
+To successfully deploy the project, follow these steps:
 
-#### 1.1. Клонирование репозитория
+#### 1.1. Clone the Repository
 
-Клонируйте репозиторий с проектом с помощью Git:
+Clone the project repository using Git:
 
 ```bash
 git clone https://github.com/seriybeliy11/Grants-Bounty-Tracker.git
 cd Grants-Bounty-Tracker
 ```
 
-#### 1.2. Запуск Docker Compose
+#### 1.2. Start Docker Compose
 
-Убедитесь, что у вас установлен Docker и Docker Compose. Запустите проект с помощью Docker Compose:
+Make sure you have Docker and Docker Compose installed. Start the project using Docker Compose:
 
 ```bash
 docker-compose up
 ```
 
-После запуска проекта, фронтенд будет доступен по адресу `http://localhost:5173`.
+After the project is launched, the frontend will be accessible at `http://localhost:5173`.
 
-### 2. Настройка окружения
+### 2. Environment Configuration
 
-#### 2.1. Настройка переменных окружения
+#### 2.1. Configure Environment Variables
 
-Для работы проекта требуется установка некоторых переменных окружения, включая:
+The project requires setting some environment variables, including:
 
-- `GITHUB_TOKEN`: Токен для доступа к GitHub API. Укажите ваш личный токен в файле `.env`, который находится в корне проекта.
+- `GITHUB_TOKEN`: Token for accessing the GitHub API. Specify your personal token in the `.env` file located in the project's root directory.
 
-#### 2.2. Окружение Redis
+#### 2.2. Redis Environment
 
-Приложение использует сервер Redis для хранения данных. Он настраивается автоматически в контейнере Docker, но вы можете изменить настройки Redis, если необходимо.
+The application uses a Redis server for data storage. It is automatically configured within the Docker container, but you can modify Redis settings if needed.
 
-### 3. Управление парсерами
+### 3. Managing Parsers
 
-Парсеры в проекте работают автономно и асинхронно, собирая данные с GitHub и сохраняя их в Redis. Вот как управлять ими:
+Parsers in the project operate autonomously and asynchronously, collecting data from GitHub and storing it in Redis. Here's how to manage them:
 
-#### 3.1. Запуск парсеров
+#### 3.1. Starting Parsers
 
-Парсеры автоматически запускаются при запуске контейнера `parsers`. Они работают асинхронно и выполняют задачи сбора данных с GitHub.
+Parsers start automatically when the `parsers` container is launched. They work asynchronously and perform data collection tasks from GitHub.
 
-#### 3.2. Остановка парсеров
+#### 3.2. Stopping Parsers
 
-Для остановки парсеров, просто остановите контейнер `parsers`:
+To stop the parsers, simply halt the `parsers` container:
 
 ```bash
 docker-compose stop parsers
 ```
 
-### 4. Обновление данных
+### 4. Data Updates
 
-Данные в проекте обновляются автоматически парсерами, но вы также можете обновить их вручную:
+Data in the project is updated automatically by parsers, but you can also manually trigger updates:
 
-#### 4.1. Обновление данных
+#### 4.1. Manually Updating Data
 
-Чтобы принудительно обновить данные, выполните следующие шаги:
+To forcibly update the data, follow these steps:
 
-1. Запустите контейнер `parsers`, если он был остановлен:
+1. Start the `parsers` container if it was stopped:
 
    ```bash
    docker-compose start parsers
    ```
 
-2. Парсеры начнут работу и обновление данных.
+2. The parsers will begin working and updating the data.
 
-### 5. Завершение работы
+### 5. Shutdown
 
-Чтобы завершить работу проекта, выполните следующие шаги:
+To shut down the project, follow these steps:
 
-1. Остановите проект с помощью Docker Compose:
+1. Stop the project using Docker Compose:
 
    ```bash
    docker-compose down
    ```
 
-2. Проект будет полностью остановлен, и контейнеры будут удалены.
+2. The project will be completely stopped, and containers will be removed.
 
-Это завершает руководство администратора для проекта "Grant's & Bounties Tracker". Вы можете начать использовать при
-
-ложение, перейдя по адресу `http://localhost:5173`. Если у вас возникли вопросы или проблемы, ознакомьтесь с документацией в папке `docs` или обратитесь к разработчикам проекта.
+This concludes the administrator's guide for the "Grant's & Bounties Tracker" project. You can start using the application by visiting `http://localhost:5173`. If you have any questions or issues, refer to the documentation in the `docs` folder or contact the project developers.

@@ -1,92 +1,90 @@
-# Руководство пользователя
+# User Guide
 
-Добро пожаловать в руководство пользователя для проекта "Grant's & Bounties Tracker". В данном руководстве вы найдете инструкции по установке, запуску и использованию приложения, а также описание доступных метрик и функциональности.
+Welcome to the user guide for the "Grant's & Bounties Tracker" project. In this guide, you will find instructions on how to install, run, and use the application, as well as descriptions of available metrics and functionality.
 
-## Содержание
+## Table of Contents
 
-1. [Введение](#введение)
-2. [Установка](#установка)
-3. [Запуск приложения](#запуск-приложения)
-4. [Использование](#использование)
-   - [Основные метрики](#основные-метрики)
-   - [Смена темы](#смена-темы)
-5. [Документация](#документация)
-6. [Связь с разработчиками](#связь-с-разработчиками)
-7. [Завершение работы](#завершение-работы)
+1. [Introduction](#introduction)
+2. [Installation](#installation)
+3. [Running the Application](#running-the-application)
+4. [Usage](#usage)
+   - [Key Metrics](#key-metrics)
+   - [Changing the Theme](#changing-the-theme)
+5. [Documentation](#documentation)
+6. [Contact Developers](#contact-developers)
+7. [Shutting Down](#shutting-down)
 
-## Введение
+## Introduction
 
-"Grant's & Bounties Tracker" представляет собой веб-приложение, разработанное с использованием React и Vite, для отображения метрик и диаграмм, связанных с активностью в организации TON Society. Приложение включает в себя различные метрики, которые позволяют отслеживать различные аспекты деятельности.
+"Grant's & Bounties Tracker" is a web application developed using React and Vite to display metrics and charts related to activity in the TON Society organization. The application includes various metrics that allow you to track different aspects of activity.
 
-## Установка
+## Installation
 
-Для установки приложения, вам потребуется Docker, который обеспечивает контейнеризацию и упрощает установку зависимостей. Следуйте инструкциям ниже:
+To install the application, you will need Docker, which provides containerization and simplifies dependency installation. Follow the instructions below:
 
-1. Убедитесь, что Docker установлен на вашем компьютере.
+1. Make sure Docker is installed on your computer.
 
-2. Склонируйте репозиторий проекта на свой компьютер:
+2. Clone the project repository to your computer:
 
    ```bash
    git clone https://github.com/seriybeliy11/Grants-Bounty-Tracker.git
    ```
 
-3. Перейдите в корневую папку проекта:
+3. Navigate to the project's root folder:
 
    ```bash
    cd Grants-Bounty-Tracker
    ```
 
-4. Запустите приложение с помощью Docker Compose:
+4. Start the application using Docker Compose:
 
    ```bash
    docker-compose up
    ```
 
-Это запустит все компоненты проекта, включая Redis, API-сервер, фронтенд и парсеры. Подождите, пока процесс завершится.
+This will start all the project components, including Redis, the API server, the frontend, and parsers. Wait for the process to complete.
 
-## Запуск приложения
+## Running the Application
 
-После успешной установки, приложение будет доступно в вашем веб-браузере по адресу [http://localhost:5173](http://localhost:5173). Вы также можете использовать [http://localhost:3000](http://localhost:3000) для обращения к API-серверу напрямую.
+After successful installation, the application will be accessible in your web browser at [http://localhost:5173](http://localhost:5173). You can also use [http://localhost:3000](http://localhost:3000) to directly access the API server.
 
-## Использование
+## Usage
 
-### Основные метрики
+### Key Metrics
 
-Приложение отображает различные метрики и диаграммы, позволяя вам отслеживать активность в организации. Основные метрики включают:
+The application displays various metrics and charts, allowing you to track activity within the organization. Key metrics include:
 
-- **GitHub Contributor Count**: Количество контрибьюторов в организации на GitHub.
-- **Best Agent**: Лучший контрибьютор организации на GitHub.
-- **Issue Count**: Количество задач в организации на GitHub.
-- **All Issues Timeline**: График, отображающий количество задач по времени.
+- **GitHub Contributor Count**: The number of contributors in the organization on GitHub.
+- **Best Agent**: The top contributor in the organization on GitHub.
+- **Issue Count**: The number of issues in the organization on GitHub.
+- **All Issues Timeline**: A chart showing the count of issues over time.
 
-### Смена темы
+### Changing the Theme
 
-Приложение поддерживает светлую и темную темы. Вы можете переключать темы, нажимая на кнопку с темой (иконка солнца и луны) в верхнем правом углу приложения.
+The application supports light and dark themes. You can switch themes by clicking the theme button (sun and moon icon) in the top right corner of the application.
 
-## Документация
+## Documentation
 
-В репозитории проекта вы найдете дополнительную документацию, включая:
+In the project repository, you will find additional documentation, including:
 
-- [Руководство администратора](./docs/admin_guide.md): Инструкции для администраторов по на
+- [Administrator's Guide](./docs/admin_guide.md): Instructions for administrators on configuring and managing the project.
+- [Installation Guide](./docs/installation.md): Instructions for installing the application and its dependencies.
 
-стройке и управлению проектом.
-- [Установочное руководство](./docs/installation.md): Инструкции по установке приложения и его зависимостей.
+## Contact Developers
 
-## Связь с разработчиками
-
-Если у вас возникли вопросы, предложения или проблемы, не стесняйтесь связаться с разработчиками проекта:
+If you have questions, suggestions, or issues, feel free to contact the project developers:
 
 - Telegram: [@acaedb](https://t.me/acaedb)
 - Telegram: [@delovoyhomie](https://t.me/delovoyhomie)
 
-## Завершение работы
+## Shutting Down
 
-По завершении работы с приложением, не забудьте остановить его с помощью команды:
+When you're done using the application, remember to shut it down with the following command:
 
 ```bash
 docker-compose down
 ```
 
-Это завершит все контейнеры и освободит ресурсы.
+This will stop all containers and free up resources.
 
-Спасибо, что выбрали "Grant's & Bounties Tracker"! Надеемся, что это приложение будет полезным для отслеживания активности в вашей организации.
+Thank you for choosing "Grant's & Bounties Tracker"! We hope this application proves to be useful for tracking activity in your organization.

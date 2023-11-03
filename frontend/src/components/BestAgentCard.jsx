@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Metric } from "@tremor/react";
-import { Tooltip } from 'react-tooltip';
 
 const BestAgentCard = () => {
   const [maxContributorLogin, setMaxContributorLogin] = useState(null);
@@ -38,12 +37,6 @@ const BestAgentCard = () => {
     <Card style={{ borderRadius: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Metric style = {{fontSize: '15px', fontFamily: 'Manrope-900'}}>Best Contributor</Metric>
-        <a data-tooltip-id="my-anchor-element_mx">💎</a>
-            <Tooltip id="my-anchor-element_mx">
-                <p>This card shows the total</p>
-                <p>number of active</p>
-                <p>developers in the organization</p>
-            </Tooltip>
       </div>
       <Metric style={{ fontSize: '27px', fontFamily: 'Manrope-900' }}>
         {maxContributorLogin !== null ? maxContributorLogin : "Loading..."}

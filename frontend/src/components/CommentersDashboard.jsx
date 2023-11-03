@@ -37,7 +37,8 @@ function CommentersComponent() {
               <Title style={{ fontFamily: 'Manrope-900' }}>Commenters Data</Title>
               <a data-tooltip-id="my-anchor-element_commenters">💎</a>
               <Tooltip id="my-anchor-element_commenters">
-                <p>Bar chart shows on the x-axis the number of tasks, on the y-axis - the number of comments for each task</p>
+                <p>Bar chart shows on the x-axis the number of tasks,</p>
+                <p>on the y-axis - the number of comments for each task</p>
               </Tooltip>
             </div>
             <div className="space-x-2">

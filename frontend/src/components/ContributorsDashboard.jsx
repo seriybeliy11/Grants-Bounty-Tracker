@@ -30,7 +30,7 @@ function ContributorsComponent() {
             <Title style={{ fontFamily: 'Manrope-900' }}>Contributors Data</Title>
           </div>
           <Subtitle style={{ fontFamily: 'Manrope-600' }}>
-            The graph presents information about the number of actions of the named contributors
+            The bar chart presents information about the number of actions of the named contributors
           </Subtitle>
           <BarChart
             className="h-72 mt-4"

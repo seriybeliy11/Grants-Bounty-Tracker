@@ -86,7 +86,7 @@
   text-align: center;
   font-size: 10px;
   font-family: 'Inter-500';
-  src: url('/Inter-500.woff2') format('woff2');
+  src: url('fonts/Manrope-Light.ttf') format('woff2');
 }
 
 .app-container {

@@ -28,10 +28,11 @@ function IssuesAllComponent() {
       {allIssuesData && (
         <div>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Title style={{ fontFamily: 'Manrope-900' }}>All Issues Timeline</Title>
+            <Title style={{ fontFamily: 'Manrope-900' }}>All Issues</Title>
             <a data-tooltip-id="my-anchor-element_states">💎</a>
             <Tooltip id="my-anchor-element_states">
-              <p>A line graph shows the number of all existing tasks at a given point in time</p>
+              <p>A line graph shows the number of all</p>
+              <p>existing tasks at a given point in time</p>
             </Tooltip>
           </div>
           <AreaChart

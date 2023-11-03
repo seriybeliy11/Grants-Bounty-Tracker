@@ -36,10 +36,10 @@ const RewardsComponent = () => {
       <div className="flex justify-between items-center">
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Title style={{ fontFamily: 'Manrope-600' }}>Reward's Data</Title>
-          <a data-tooltip-id="my-anchor-element_season">💎</a>
-          <Tooltip id="my-anchor-element_season">
-            <p>The line graph shows on the x-axis the numbers of tasks and on the y-axis the reward amounts for each task in dollars</p>
-            <p>It is also possible to select a moment in time (different tasks existed at different times)</p>
+          <a data-tooltip-id="my-anchor-element_sea">💎</a>
+          <Tooltip id="my-anchor-element_sea">
+            <p>The line graph shows on the x-axis the numbers of tasks and on</p>
+            <p>the y-axis the reward amounts for each task in dollars</p>
           </Tooltip>
         </div>
         <div className="space-x-2">

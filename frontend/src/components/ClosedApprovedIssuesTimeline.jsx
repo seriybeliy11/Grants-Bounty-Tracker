@@ -30,13 +30,11 @@ function ApprovedIssuesComponent() {
         <Card style={{ borderRadius: '16px' }}>
           <div style={{ alignItems: 'center', justifyContent: 'center' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
-              <Title style={{ fontFamily: 'Manrope-900' }}>Closed Approved Issues Timeline</Title>
+              <Title style={{ fontFamily: 'Manrope-900' }}>Closed Approved Issues</Title>
               <a data-tooltip-id="my-anchor-element_sla">💎</a>
               <Tooltip id="my-anchor-element_sla">
-                <p>This line graph shows the</p>
-                <p>number of closed and</p>
-                <p>paid tasks at a point</p>
-                <p>in time</p>
+                <p>This line graph shows the number of</p>
+                <p>closed and paid tasks at a point in time</p>
               </Tooltip>
             </div>
             <AreaChart

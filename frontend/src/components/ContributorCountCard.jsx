@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Metric } from "@tremor/react";
-import { Tooltip } from 'react-tooltip';
 
 const AgentQueCard = () => {
   const [loginCount, setLoginCount] = useState(null);
@@ -27,11 +26,6 @@ const AgentQueCard = () => {
     <Card style={{ borderRadius: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Metric style = {{fontSize: '15px', fontFamily:'Manrope-900'}}>Contributor's Value</Metric>
-          <a data-tooltip-id="my-anchor-element_mpanel">💎</a>
-        <Tooltip id="my-anchor-element_mpanel">
-          <p>The card shows the number</p>
-          <p>of all active developers</p>
-        </Tooltip>
       </div>
       <Metric style={{ fontSize: '27px', fontFamily: 'Manrope-900' }}>
         {loginCount !== null ? loginCount : "Loading..."}

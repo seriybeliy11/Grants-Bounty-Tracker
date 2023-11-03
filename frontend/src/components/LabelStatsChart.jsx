@@ -54,7 +54,7 @@ const ChartsLabels = () => {
           <Title style={{ fontFamily: 'Manrope-900' }}>Label's Data</Title>
           <a data-tooltip-id="my-anchor-element_labels">💎</a>
           <Tooltip id="my-anchor-element_labels">
-            <p>The pie chart shows the ratio of different types of tasks, 1 color - 1 category of tasks</p>
+            <p>The pie chart shows the ratio of different types of tasks</p>
           </Tooltip>
         </div>
         <div className="space-x-2">

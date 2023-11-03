@@ -5,7 +5,7 @@ import ContributorsComponent from './components/ContributorsDashboard';
 import IssuesAllComponent from './components/AllIssuesTimeline';
 import JustClosedIssuesComponent from './components/ClosedIssuesTimeline';
 import ApprovedIssuesComponent from './components/ClosedApprovedIssuesTimeline';
-import AgentQueCard from './components/GitHubContributorCountCard';
+import AgentQueCard from './components/ContributorCountCard';
 import BestAgentCard from './components/BestAgentCard';
 import IssuesQueCard from './components/IssueCountCard';
 import ThreatenedSpeciesQueChart from './components/TaskDurationBarChart';
@@ -102,8 +102,8 @@ function App() {
           </div>
           <div className="w-1/3 dark:text-white">
             <h3 className="text-lg font-semibold">Contacts</h3>
-            <span className="block leading-8">@acaedb (tg)</span>
             <span className="block leading-8">@delovoyhomie (tg)</span>
+            <span className="block leading-8">@acaedb (tg)</span>
           </div>
           <div className="w-1/3 text-center dark:text-white">
             <p className="text-lg" style={{ fontFamily: 'Manrope-700' }}>

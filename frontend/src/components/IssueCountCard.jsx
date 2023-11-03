@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Metric } from "@tremor/react";
-import { Tooltip } from 'react-tooltip';
 
 const IssuesQueCard = () => {
   const [totalIssuesValue, setTotalIssuesValue] = useState(null);
@@ -39,10 +38,6 @@ const IssuesQueCard = () => {
     <Card style={{ borderRadius: '16px' }}>
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <Metric style={{ fontSize: '15px', fontFamily: 'Manrope-900' }}>Issue's Value</Metric>
-        <a data-tooltip-id="my-anchor-element_stst">💎</a>
-        <Tooltip id="my-anchor-element_stst">
-          <p>The card shows the number of all tasks that have ever existed</p>
-        </Tooltip>
       </div>
       <Metric style={{ fontSize: '27px', fontFamily: 'Manrope-900' }}>
         {totalIssuesValue !== null ? totalIssuesValue : "Loading..."}

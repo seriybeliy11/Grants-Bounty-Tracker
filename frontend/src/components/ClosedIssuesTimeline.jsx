@@ -29,10 +29,11 @@ const JustClosedIssuesComponent = () => {
       {justClosedIssuesData && (
         <Card style={{ borderRadius: '16px' }}>
           <div style={{ display: 'flex', alignItems: 'center' }}>
-            <Title style={{ fontFamily: 'Manrope-900' }}>Just Closed Issues Timeline</Title>
+            <Title style={{ fontFamily: 'Manrope-900' }}>Closed Issues</Title>
             <a data-tooltip-id="my-anchor-element_cla">💎</a>
             <Tooltip id="my-anchor-element_cla">
-              <p>This line graph shows the number of closed unpaid tasks at the moment of time</p>
+              <p>This line graph shows the number of</p>
+              <p>closed unpaid tasks at the moment of time</p>
             </Tooltip>
           </div>
           <AreaChart

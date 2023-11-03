@@ -1,6 +1,6 @@
 ## Administrator's Guide
 
-Welcome to the administrator's guide for the "Grants & Bounties Tracker" project. In this guide, you will find detailed instructions on how to install, configure, and manage the project. The project is a web application that includes a frontend, an API server, GitHub data parsers, and a Redis database.
+Welcome to the administrator's guide for the Grants & Bounties Tracker. In this guide, you will find detailed instructions on how to install, configure, and manage the project. The project is a web application that includes a frontend, an API server, GitHub data parsers, and a Redis database.
 
 ### Table of Contents:
 1. [Installation and Project Setup](#1-installation-and-project-setup)

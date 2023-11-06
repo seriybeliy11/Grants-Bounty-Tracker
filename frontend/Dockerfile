@@ -14,4 +14,4 @@ EXPOSE 3000
 
 EXPOSE 5173
 
-CMD ./start.sh
+CMD [ "/app/start.sh" ]

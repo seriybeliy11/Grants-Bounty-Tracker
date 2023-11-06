@@ -4,7 +4,7 @@ WORKDIR /app
 
 COPY . .
 
-RUN apk update && apk add --no-cache nodejs npm curl
+RUN apk add --no-cache nodejs npm curl
 
 RUN npm install
 

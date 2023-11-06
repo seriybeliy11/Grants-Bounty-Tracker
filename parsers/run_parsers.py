@@ -11,6 +11,8 @@ import issue_stats_parser
 import issue_type_parser
 import labels_stats_parser
 import redis
+import schedule
+import time
 
 logging.basicConfig(
     level=logging.INFO,
@@ -54,5 +56,14 @@ async def run_parsers():
 
     redis_client.set('parsers_completed', 'completed')
 
+def schedule_run_parsers():
+    asyncio.run(run_parsers())
+
 if __name__ == '__main__':
     asyncio.run(run_parsers())
+
+    schedule.every(30).minutes.do(schedule_run_parsers)
+
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

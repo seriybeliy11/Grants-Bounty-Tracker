@@ -1,6 +1,6 @@
 # User Guide
 
-Welcome to the user guide for the "Grant's & Bounties Tracker" project. In this guide, you will find instructions on how to install, run, and use the application, as well as descriptions of available metrics and functionality.
+Welcome to the user guide for the "Grants & Bounties Tracker". In this guide, you will find instructions on how to install, run, and use the application, as well as descriptions of available metrics and functionality.
 
 ## Table of Contents
 
@@ -16,7 +16,7 @@ Welcome to the user guide for the "Grant's & Bounties Tracker" project. In this 
 
 ## Introduction
 
-"Grant's & Bounties Tracker" is a web application developed using React and Vite to display metrics and charts related to activity in the TON Society organization. The application includes various metrics that allow you to track different aspects of activity.
+"Grants & Bounties Tracker" is a web application developed using React and Vite to display metrics and charts related to activity in the TON Society organization. The application includes various metrics that allow you to track different aspects of activity.
 
 ## Installation
 
@@ -87,4 +87,4 @@ docker-compose down
 
 This will stop all containers and free up resources.
 
-Thank you for choosing "Grant's & Bounties Tracker"! We hope this application proves to be useful for tracking activity in your organization.
+Thank you for choosing "Grants & Bounties Tracker"! We hope this application proves to be useful for tracking activity in your organization.

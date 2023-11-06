@@ -57,7 +57,7 @@ function CommentersComponent() {
           </div>
           <BarChart
             className="h-72 mt-4"
-            data={contributorsData[selectedYear]}
+            data={contributorsData ? contributorsData[selectedYear] : []}
             index="issue"
             categories={["Comments"]}
             colors={["sky"]}

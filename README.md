@@ -18,7 +18,7 @@ The project has the following repository structure:
 
 - `kubernetes/`: Directory with Kubernetes configuration files for deploying the system.
 
-- `docker-compose.yml`: Docker Compose file for managing project containers.
+- `compose.yml`: Docker Compose file for managing project containers.
 
 ## Key Components
 
@@ -77,8 +77,8 @@ Project Authors:
 
 Reach out to us:
 
-- Telegram: @delovoyhomie
-- Telegram: @acaedb
+- Telegram: [@delovoyhomie](https://t.me/delovoyhomie)
+- Telegram: [@acaedb](https://t.me/acaedb)
 
 ## License
 

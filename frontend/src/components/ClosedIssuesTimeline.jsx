@@ -40,7 +40,7 @@ const JustClosedIssuesComponent = () => {
             className="h-72 mt-4"
             data={justClosedIssuesData}
             index="Date"
-            categories={["ClosedIssues"]}
+            categories={["Closed Issues"]}
             colors={["sky"]}
             curveType="monotone"
           />

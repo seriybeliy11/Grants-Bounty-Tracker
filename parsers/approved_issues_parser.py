@@ -58,16 +58,16 @@ async def main(GITHUB_TOKEN):
 
                 for issue in issues:
                     created_at = issue["created_at"][:4]
-                    year_data = issues_by_year.setdefault(created_at, {"ClosedApprovedIssues": 0})
+                    year_data = issues_by_year.setdefault(created_at, {"Closed Approved Issues": 0})
 
                     if issue["state"] == "closed" and approved_label and approved_label in issue["labels"]:
-                        year_data["ClosedApprovedIssues"] += 1
+                        year_data["Closed Approved Issues"] += 1
 
                 page += 1
 
         sorted_years = sorted(issues_by_year.keys())
 
-        result = [{"Date": year, "ClosedApprovedIssues": issues_by_year[year]["ClosedApprovedIssues"]} for year in sorted_years]
+        result = [{"Date": year, "Closed Approved Issues": issues_by_year[year]["Closed Approved Issues"]} for year in sorted_years]
         
         await save_data_to_redis(redis_client, 'approved_issues', result, 4 * 60 * 60)
 

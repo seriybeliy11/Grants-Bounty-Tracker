@@ -67,8 +67,8 @@ The application supports light and dark themes. You can switch themes by clickin
 
 In the project repository, you will find additional documentation, including:
 
-- [Administrator's Guide](./docs/admin_guide.md): Instructions for administrators on configuring and managing the project.
-- [Installation Guide](./docs/installation.md): Instructions for installing the application and its dependencies.
+- [Administrator's Guide](./admin_guide.md): Instructions for administrators on configuring and managing the project.
+- [Installation Guide](./installation.md): Instructions for installing the application and its dependencies.
 
 ## Contact Developers
 

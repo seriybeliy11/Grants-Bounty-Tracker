@@ -95,20 +95,19 @@ function App() {
           </div>
         </div>
         <footer className="bg-opacity-0 rounded-t-lg mt-10 py-6 px-4 flex justify-between items-center border-t-10 border-black">
-          <div className="w-1/3 dark:text-white">
+          <div className="w-1/3 text-tremor-content-emphasis dark:text-dark-tremor-content-emphasis">
             <h3 className="text-lg font-semibold">Creators</h3>
             <span className="block leading-8">delovoyhomie</span>
             <span className="block leading-8">seriybeliy11</span>
           </div>
-          <div className="w-1/3 dark:text-white">
+          <div className="w-1/3 text-tremor-content-emphasis dark:text-dark-tremor-content-emphasis">
             <h3 className="text-lg font-semibold">Contacts</h3>
             <span className="block leading-8">@delovoyhomie (tg)</span>
             <span className="block leading-8">@acaedb (tg)</span>
           </div>
-          <div className="w-1/3 text-center dark:text-white">
+          <div className="w-1/3 text-center text-tremor-content-emphasis dark:text-dark-tremor-content-emphasis">
             <p className="text-lg" style={{ fontFamily: 'Manrope-700' }}>
               <span className="text-base">Know your Step</span>
-              <span className="text-2xl ml-1">📐</span>
             </p>
           </div>
         </footer>
@@ -117,7 +116,7 @@ function App() {
           <div className="left-column">
             <img src="images/logo.png" alt="Logo" className="w-6 h-6" />
           </div>
-          <div className="dark:text-white flex items-center h-full">
+          <div className="text-tremor-content-emphasis dark:text-dark-tremor-content-emphasis flex items-center h-full">
             <p style={{ fontFamily: 'Manrope-700' }}>TON Society. All rights reserved.</p>
           </div>
         </div>

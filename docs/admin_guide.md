@@ -27,7 +27,7 @@ cd Grants-Bounty-Tracker
 Make sure you have Docker and Docker Compose installed. Start the project using Docker Compose:
 
 ```bash
-docker-compose up
+docker compose up
 ```
 
 After the project is launched, the frontend will be accessible at `http://localhost:5173`.
@@ -57,7 +57,7 @@ Parsers start automatically when the `parsers` container is launched. They work 
 To stop the parsers, simply halt the `parsers` container:
 
 ```bash
-docker-compose stop parsers
+docker compose stop parsers
 ```
 
 ### 4. Data Updates
@@ -71,7 +71,7 @@ To forcibly update the data, follow these steps:
 1. Start the `parsers` container if it was stopped:
 
    ```bash
-   docker-compose start parsers
+   docker compose start parsers
    ```
 
 2. The parsers will begin working and updating the data.
@@ -83,7 +83,7 @@ To shut down the project, follow these steps:
 1. Stop the project using Docker Compose:
 
    ```bash
-   docker-compose down
+   docker compose down
    ```
 
 2. The project will be completely stopped, and containers will be removed.

@@ -27,7 +27,7 @@ Before getting started, make sure you have the following components installed:
 3. Navigate to the project's root directory and run the following command to start the project using Docker Compose:
 
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
    This will start containers for Redis, the frontend, and the data parser container. The parsers will begin gathering data from GitHub and storing it in Redis.
@@ -39,7 +39,7 @@ Before getting started, make sure you have the following components installed:
 To shut down the project, run the following command in the project's root directory:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 This will stop the containers and free up resources.

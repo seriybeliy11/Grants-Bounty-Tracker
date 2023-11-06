@@ -39,7 +39,7 @@ To install the application, you will need Docker, which provides containerizatio
 4. Start the application using Docker Compose:
 
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
 This will start all the project components, including Redis, the API server, the frontend, and parsers. Wait for the process to complete.
@@ -82,7 +82,7 @@ If you have questions, suggestions, or issues, feel free to contact the project 
 When you're done using the application, remember to shut it down with the following command:
 
 ```bash
-docker-compose down
+docker compose down
 ```
 
 This will stop all containers and free up resources.

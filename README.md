@@ -53,7 +53,7 @@ To run the project, follow these steps:
 2. Start the containers with the following command:
 
    ```bash
-   docker-compose up
+   docker compose up
    ```
 
    This will launch Redis, the frontend, and the parser container.

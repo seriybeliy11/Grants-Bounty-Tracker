@@ -41,7 +41,7 @@ function ApprovedIssuesComponent() {
               className="h-72 mt-4"
               data={approvedIssuesData}
               index="Date"
-              categories={["ClosedApprovedIssues"]}
+              categories={["Closed Approved Issues"]}
               colors={["sky"]}
               curveType="monotone"
             />

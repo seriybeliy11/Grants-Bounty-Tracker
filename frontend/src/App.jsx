@@ -34,7 +34,7 @@ function App() {
           <ThemeButton />
         </div>
         <Title style={{ fontFamily: 'Manrope-900', fontSize: '59px', lineHeight: '28px', marginBottom: '80px' }}>
-          Grant's & Bounties
+          Grants & Bounties
         </Title>
         <Title style={{ fontFamily: 'Manrope-900' }} className="options">
           Activity monitoring system in the TON Society organization

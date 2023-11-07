@@ -59,7 +59,7 @@ async def main(GITHUB_TOKEN):
 
                 page += 1
 
-        await save_data_to_redis(redis_client, "issue_rewards", issue_rewards, 14400)
+        await save_data_to_redis(redis_client, "issue_rewards", issue_rewards, 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

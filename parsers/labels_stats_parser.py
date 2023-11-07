@@ -46,7 +46,7 @@ async def main(GITHUB_TOKEN):
 
                 for issue in issues:
                     labels = issue["labels"]
-                    created_at = issue["created_at"][:4]  # Extract year
+                    created_at = issue["created_at"][:4]
                     if created_at not in labels_by_year:
                         labels_by_year[created_at] = {}
                     for label in labels:
@@ -60,7 +60,7 @@ async def main(GITHUB_TOKEN):
             for year in labels_by_year
         })
 
-        await save_data_to_redis(redis_client, "labels_stats", labels_result, 4 * 3600)
+        await save_data_to_redis(redis_client, "labels_stats", labels_result, 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

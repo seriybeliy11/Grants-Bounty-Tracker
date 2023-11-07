@@ -14,7 +14,7 @@ async def get_data_from_redis(redis_client, key):
 
 async def get_contributors(url, headers, page):
     async with aiohttp.ClientSession() as session:
-        params = {"page": page, "per_page": 100}  # Adjust per_page as needed
+        params = {"page": page, "per_page": 100}
         async with session.get(url, headers=headers, params=params) as response:
             response.raise_for_status()
             return await response.json()
@@ -45,7 +45,7 @@ async def main(GITHUB_TOKEN):
                 for contributor in contributors
             ])
             page += 1
-        await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 4 * 3600)
+        await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

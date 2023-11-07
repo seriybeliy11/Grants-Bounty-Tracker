@@ -56,7 +56,7 @@ async def main(GITHUB_TOKEN):
     redis_data = await get_data_from_redis(redis, "closed_issues")
 
     if not redis_data:
-        await save_data_to_redis(redis, "closed_issues", result, 4 * 60 * 60)
+        await save_data_to_redis(redis, "closed_issues", result, 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

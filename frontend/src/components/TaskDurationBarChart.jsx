@@ -53,7 +53,7 @@ const ThreatenedSpeciesQueChart = () => {
           className="mt-6"
           data={apiData[selectedYear]}
           index="number"
-          categories={["duration"]}
+          categories={["Duration"]}
           colors={["sky"]}
           yAxisWidth={48}
         />

@@ -14,7 +14,6 @@ function ApprovedIssuesComponent() {
         }
         const data = await response.json();
         const jsonData = data.result;
-        console.log(jsonData);
         setApprovedIssuesData(jsonData);
       } catch (error) {
         console.error("Error:", error);

@@ -36,7 +36,7 @@ function ContributorsComponent() {
             className="h-72 mt-4"
             data={contributorsData}
             index="login"
-            categories={["contributions"]}
+            categories={["Contributions"]}
             colors={["sky"]}
           />
         </Card>

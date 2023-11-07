@@ -18,8 +18,8 @@ const BestAgentCard = () => {
         let maxLogin = null;
 
         jsonData.forEach((contributor) => {
-          if (contributor.contributions > maxContributions) {
-            maxContributions = contributor.contributions;
+          if (contributor.Contributions > maxContributions) {
+            maxContributions = contributor.Contributions;
             maxLogin = contributor.login;
           }
         });

@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: parsers-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: parsers
+  template:
+    metadata:
+      labels:
+        app: parsers
+    spec:
+      containers:
+      - name: parsers-container
+        image: parsers:latest
+        env:
+        - name: GITHUB_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: github-token-secret 
+              key: GITHUB_TOKEN

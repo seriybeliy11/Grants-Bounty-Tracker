@@ -1,1 +1,0 @@
-*/30 * * * * /usr/local/bin/python /app/run_parsers.py

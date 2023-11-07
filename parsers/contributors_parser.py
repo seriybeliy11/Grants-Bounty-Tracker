@@ -40,7 +40,7 @@ async def main(GITHUB_TOKEN):
             contributors_data.extend([
                 {
                     "login": contributor["login"],
-                    "contributions": float(contributor["contributions"])
+                    "Contributions": float(contributor["contributions"])
                 }
                 for contributor in contributors
             ])

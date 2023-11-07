@@ -63,7 +63,7 @@ async def main(GITHUB_TOKEN):
                 if created_at not in duration_by_year:
                     duration_by_year[created_at] = []
 
-                duration_by_year[created_at].append({"number": str(issue["number"]), "duration": duration})
+                duration_by_year[created_at].append({"number": str(issue["number"]), "Duration": duration})
 
             page += 1
 

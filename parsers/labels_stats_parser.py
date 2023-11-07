@@ -60,7 +60,7 @@ async def main(GITHUB_TOKEN):
             for year in labels_by_year
         })
 
-        await save_data_to_redis(redis_client, "labels_stats", labels_result, 60)
+        await save_data_to_redis(redis_client, "labels_stats", labels_result, 10 * 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

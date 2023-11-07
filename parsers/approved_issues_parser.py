@@ -69,7 +69,7 @@ async def main(GITHUB_TOKEN):
 
         result = [{"Date": year, "Closed Approved Issues": issues_by_year[year]["Closed Approved Issues"]} for year in sorted_years]
         
-        await save_data_to_redis(redis_client, 'approved_issues', result, 60)
+        await save_data_to_redis(redis_client, 'approved_issues', result, 10 * 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

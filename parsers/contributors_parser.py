@@ -45,7 +45,7 @@ async def main(GITHUB_TOKEN):
                 for contributor in contributors
             ])
             page += 1
-        await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 60)
+        await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 10 * 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

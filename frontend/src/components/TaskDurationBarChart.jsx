@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Card, Title, BarChart, Subtitle } from "@tremor/react";
 
 const ThreatenedSpeciesQueChart = () => {
-  const [selectedYear, setSelectedYear] = useState("2022");
+  const [selectedYear, setSelectedYear] = useState("2023");
   const [apiData, setApiData] = useState(null);
 
   useEffect(() => {

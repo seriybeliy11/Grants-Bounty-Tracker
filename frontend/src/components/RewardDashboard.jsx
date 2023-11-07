@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tooltip';
 
 const RewardsComponent = () => {
   const [rewardsData, setRewardsData] = useState(null);
-  const [selectedYear, setSelectedYear] = useState("2022");
+  const [selectedYear, setSelectedYear] = useState("2023");
 
   useEffect(() => {
     const fetchData = async () => {

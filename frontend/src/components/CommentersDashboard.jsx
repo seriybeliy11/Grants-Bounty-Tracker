@@ -4,7 +4,7 @@ import { Tooltip } from 'react-tooltip';
 
 function CommentersComponent() {
   const [contributorsData, setContribData] = useState(null);
-  const [selectedYear, setSelectedYear] = useState("2022");
+  const [selectedYear, setSelectedYear] = useState("2023");
 
   useEffect(() => {
     const fetchData = async () => {

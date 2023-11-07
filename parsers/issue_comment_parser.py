@@ -62,7 +62,7 @@ async def main(GITHUB_TOKEN):
 
         result = issues_with_comments
 
-        await save_data_to_redis(redis_conn, 'issue_comments', result, 10 * 60)
+        await save_data_to_redis(redis_conn, 'issue_comments', result, 5 * 60)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

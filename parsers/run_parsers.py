@@ -62,7 +62,7 @@ def schedule_run_parsers():
 if __name__ == '__main__':
     asyncio.run(run_parsers())
 
-    schedule.every(5).minutes.do(schedule_run_parsers)
+    schedule.every(15).minutes.do(schedule_run_parsers)
 
     while True:
         schedule.run_pending()

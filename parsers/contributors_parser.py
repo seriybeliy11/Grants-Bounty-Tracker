@@ -3,14 +3,8 @@ import aiohttp
 import ujson
 from redis import asyncio as aioredis
 
-async def save_data_to_redis(redis_client, key, data, expiration):
-    await redis_client.setex(key, expiration, ujson.dumps(data))
-
-async def get_data_from_redis(redis_client, key):
-    data = await redis_client.get(key)
-    if data:
-        return ujson.loads(data)
-    return None
+async def save_data_to_redis(redis_client, key, data):
+    await redis_client.set(key, ujson.dumps(data))
 
 async def get_contributors(url, headers, page):
     async with aiohttp.ClientSession() as session:
@@ -28,24 +22,21 @@ async def main(GITHUB_TOKEN):
 
     redis_conn = await aioredis.from_url("redis://redis")
 
-    contributors_data = await get_data_from_redis(redis_conn, 'github_contributors')
-
-    if not contributors_data:
-        contributors_data = []
-        page = 1
-        while True:
-            contributors = await get_contributors(url, headers, page)
-            if not contributors:
-                break
-            contributors_data.extend([
-                {
-                    "login": contributor["login"],
-                    "Contributions": float(contributor["contributions"])
-                }
-                for contributor in contributors
-            ])
-            page += 1
-        await save_data_to_redis(redis_conn, 'github_contributors', contributors_data, 5 * 60)
+    contributors_data = []
+    page = 1
+    while True:
+        contributors = await get_contributors(url, headers, page)
+        if not contributors:
+            break
+        contributors_data.extend([
+            {
+                "login": contributor["login"],
+                "Contributions": float(contributor["contributions"])
+            }
+            for contributor in contributors
+        ])
+        page += 1
+    await save_data_to_redis(redis_conn, 'github_contributors', contributors_data)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

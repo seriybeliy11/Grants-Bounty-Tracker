@@ -10,14 +10,8 @@ async def get_issues(session, page, url, params, headers):
         response.raise_for_status()
         return await response.json(loads=ujson.loads)
 
-async def save_data_to_redis(redis_client, key, data, expiration):
-    await redis_client.setex(key, expiration, ujson.dumps(data))
-
-async def get_data_from_redis(redis_client, key):
-    data = await redis_client.get(key)
-    if data:
-        return ujson.loads(data)
-    return None
+async def save_data_to_redis(redis_client, key, data):
+    await redis_client.set(key, ujson.dumps(data))
 
 async def main(GITHUB_TOKEN):
     HEADERS = {
@@ -32,34 +26,31 @@ async def main(GITHUB_TOKEN):
 
     redis_client = await aioredis.from_url("redis://redis")
 
-    cached_data = await get_data_from_redis(redis_client, "issue_rewards")
+    issue_rewards = OrderedDict()
 
-    if not cached_data:
-        issue_rewards = OrderedDict()
+    async with aiohttp.ClientSession() as session:
+        page = 1
+        while True:
+            issues = await get_issues(session, page, url, params, HEADERS)
+            if not issues:
+                break
 
-        async with aiohttp.ClientSession() as session:
-            page = 1
-            while True:
-                issues = await get_issues(session, page, url, params, HEADERS)
-                if not issues:
-                    break
+            for issue in issues:
+                created_at = issue["created_at"][:4]
+                body = issue.get("body")
+                if body:
+                    reward_info = body.split('$')
+                    if len(reward_info) >= 2:
+                        try:
+                            reward = int(reward_info[1].split(' ')[0])
+                            issue_info = {"Issue Number": str(issue["number"]), "Rewards (th. $)": reward}
+                            issue_rewards.setdefault(created_at, []).append(issue_info)
+                        except ValueError:
+                            pass
 
-                for issue in issues:
-                    created_at = issue["created_at"][:4]
-                    body = issue.get("body")
-                    if body:
-                        reward_info = body.split('$')
-                        if len(reward_info) >= 2:
-                            try:
-                                reward = int(reward_info[1].split(' ')[0])
-                                issue_info = {"Issue Number": str(issue["number"]), "Rewards (th. $)": reward}
-                                issue_rewards.setdefault(created_at, []).append(issue_info)
-                            except ValueError:
-                                pass
+            page += 1
 
-                page += 1
-
-        await save_data_to_redis(redis_client, "issue_rewards", issue_rewards, 5 * 60)
+    await save_data_to_redis(redis_client, "issue_rewards", issue_rewards)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

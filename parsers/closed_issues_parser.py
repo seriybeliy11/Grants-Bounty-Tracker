@@ -10,14 +10,8 @@ async def get_issues(url, params, headers, page):
             response.raise_for_status()
             return await response.json(loads=ujson.loads)
 
-async def save_data_to_redis(redis_client, key, data, expiration):
-    await redis_client.setex(key, expiration, ujson.dumps(data))
-
-async def get_data_from_redis(redis_client, key):
-    data = await redis_client.get(key)
-    if data:
-        return ujson.loads(data)
-    return None
+async def save_data_to_redis(redis_client, key, data):
+    await redis_client.set(key, ujson.dumps(data))
 
 async def main(GITHUB_TOKEN):
     HEADERS = {
@@ -53,10 +47,7 @@ async def main(GITHUB_TOKEN):
 
     result = [{"Date": year, "Closed Issues": closed_issues_by_year[year]} for year in sorted_years]
 
-    redis_data = await get_data_from_redis(redis, "closed_issues")
-
-    if not redis_data:
-        await save_data_to_redis(redis, "closed_issues", result, 5 * 60)
+    await save_data_to_redis(redis, "closed_issues", result)
 
 if __name__ == '__main__':
     GITHUB_TOKEN = "YOUR_GITHUB_TOKEN"

@@ -33,7 +33,7 @@ function App() {
         <div className="toolb">
           <ThemeButton />
         </div>
-        <Title style={{ fontFamily: 'Manrope-900', fontSize: '59px', lineHeight: '28px', marginBottom: '80px' }}>
+        <Title style={{ fontFamily: 'Manrope-900', fontSize: '39px', lineHeight: '28px', marginBottom: '80px' }}>
           Grants & Bounties
         </Title>
         <Title style={{ fontFamily: 'Manrope-900' }} className="options">

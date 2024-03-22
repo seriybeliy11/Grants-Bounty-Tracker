@@ -8,7 +8,7 @@ const ThreatenedSpeciesQueChart = () => {
   useEffect(() => {
     async function fetchDataFromAPI() {
       try {
-        const response = await fetch("http://localhost:3000/issue_stats");
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/issue_stats`);
         if (!response.ok) {
           throw new Error('Error');
         }

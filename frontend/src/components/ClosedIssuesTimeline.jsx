@@ -8,7 +8,7 @@ const JustClosedIssuesComponent = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/closed_issues");
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/closed_issues`);
         if (!response.ok) {
           throw new Error('Error');
         }

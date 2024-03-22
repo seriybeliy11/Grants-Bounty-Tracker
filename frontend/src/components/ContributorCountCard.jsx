@@ -7,7 +7,7 @@ const AgentQueCard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const response = await fetch("http://localhost:3000/github_contributors");
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/github_contributors`);
         if (!response.ok) {
           throw new Error('Error');
         }

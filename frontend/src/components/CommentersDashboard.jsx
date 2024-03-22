@@ -9,7 +9,7 @@ function CommentersComponent() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch("http://localhost:3000/issue_comments");
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/issue_comments`);
         if (!response.ok) {
           throw new Error('Failed to fetch data');
         }

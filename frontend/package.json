@@ -4,7 +4,8 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "VITE_API_BASE_URL=http://localhost:3000 vite",
+    "dev:local": "VITE_API_BASE_URL=http://localhost:3000 vite",
+    "dev:remote": "VITE_API_BASE_URL=http://$(curl -s ifconfig.me):3000 vite",
     "build": "VITE_API_BASE_URL=http://$(curl -s ifconfig.me):3000 vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"

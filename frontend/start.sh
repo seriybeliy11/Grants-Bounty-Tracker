@@ -11,4 +11,4 @@ while true; do
   sleep 1
 done
 
-npm run dev -- --host
+npm run dev:remote
